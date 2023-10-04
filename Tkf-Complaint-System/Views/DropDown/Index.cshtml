@@ -1,0 +1,119 @@
+﻿@model Tkf_Complaint_System.Models.DropDownViewModel
+
+@{
+    ViewData["Title"] = "DropDown Example";
+}
+
+<h1>DropDown Example</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="province">Province:</label>
+        <select class="form-control" id="province" name="ProvinceId" asp-for="SelectedProvince">
+            <option value="">-- Select Province --</option>
+            @foreach (var province in Model.Provinces)
+            {
+                <option value="@province.ProvinceId">@province.ProvinceName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="district">District:</label>
+        <select class="form-control" id="district" name="DistrictId" asp-for="SelectedDistrict">
+            <option value="">-- Select District --</option>
+            <!-- District dropdown will be populated dynamically -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="city">City:</label>
+        <select class="form-control" id="city" name="CityId" asp-for="SelectedCity">
+            <option value="">-- Select City --</option>
+            <!-- City dropdown will be populated dynamically -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="uc">UC:</label>
+        <select class="form-control" id="uc" name="UCId" asp-for="SelectedUC">
+            <option value="">-- Select UC --</option>
+            <!-- UC dropdown will be populated dynamically -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="project">Project Name:</label>
+        <select class="form-control" id="project" name="ProjectId" asp-for="SelectedProject">
+            <option value="">-- Select Project --</option>
+            <!-- Project dropdown will be populated dynamically -->
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#province").change(function () {
+                debugger
+                var selectedProvince = $(this).val();
+                $("#district").empty().append('<option value="">-- Select District --</option>');
+                $("#city").empty().append('<option value="">-- Select City --</option>');
+                $("#uc").empty().append('<option value="">-- Select UC --</option>');
+                $("#project").empty().append('<option value="">-- Select Project --</option>');
+
+                if (selectedProvince !== '') {
+                    $.getJSON('/Dropdown/GetDistricts', { provinceId: selectedProvince }, function (data) {
+                        $.each(data, function (i, district) {
+                            $("#district").append('<option value="' + district.districtId + '">' + district.districtName + '</option>');
+                        });
+                    });
+                }
+            });
+
+            $("#district").change(function () {
+                var selectedDistrict = $(this).val();
+                $("#city").empty().append('<option value="">-- Select City --</option>');
+                $("#uc").empty().append('<option value="">-- Select UC --</option>');
+                $("#project").empty().append('<option value="">-- Select Project --</option>');
+
+                if (selectedDistrict !== '') {
+                    $.getJSON('/Dropdown/GetCities', { districtId: selectedDistrict }, function (data) {
+                        $.each(data, function (i, city) {
+                            $("#city").append('<option value="' + city.cityId + '">' + city.cityName + '</option>');
+                        });
+                    });
+                }
+            });
+
+            $("#city").change(function () {
+                var selectedCity = $(this).val();
+                $("#uc").empty().append('<option value="">-- Select UC --</option>');
+                $("#project").empty().append('<option value="">-- Select Project --</option>');
+
+                if (selectedCity !== '') {
+                    $.getJSON('/Dropdown/GetUCs', { cityId: selectedCity }, function (data) {
+                        $.each(data, function (i, uc) {
+                            $("#uc").append('<option value="' + uc.ucId + '">' + uc.ucName + '</option>');
+                        });
+                    });
+                }
+            });
+
+            $("#uc").change(function () {
+                var selectedUC = $(this).val();
+                $("#project").empty().append('<option value="">-- Select Project --</option>');
+
+                if (selectedUC !== '') {
+                    $.getJSON('/Dropdown/GetProjects', { ucId: selectedUC }, function (data) {
+                        $.each(data, function (i, project) {
+                            $("#project").append('<option value="' + project.projectId + '">' + project.projectName + '</option>');
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+}
