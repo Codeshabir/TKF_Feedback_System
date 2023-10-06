@@ -40,19 +40,7 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
-        //// POST: api/ClientInformation
-        //[HttpPost]
-        //public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)
-        //{
-        //    if (clientInformation.Feedbacks.ComplaintDate.Kind != DateTimeKind.Utc)
-        //    {
-        //        clientInformation.ComplaintDate = clientInformation.ComplaintDate.ToUniversalTime();
-        //    }
-        //    _context.clientInformation.Add(clientInformation);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
-        //}
+     
 
         [HttpPost]
         public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)

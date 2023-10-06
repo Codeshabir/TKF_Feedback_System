@@ -28,6 +28,6 @@ namespace Tkf_Complaint_System.Models
 
         public int ProjectId { get; set; }
 
-        public Project_tbl? Project { get; set; }
+        public Project_tbl Project { get; set; }
     }
 }
