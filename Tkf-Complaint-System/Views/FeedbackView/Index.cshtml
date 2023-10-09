@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Tkf_Complaint_System.Models.Feedback>
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+
+
+        <div class="card">
+            <h5 class="card-header">Feedback Table</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <!--<th>Project</th>-->
+                            <th>Serial No</th>
+                            <th>Client ID</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Sub Type</th>
+                            <th>Remarks</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.ClientId</td>
+                                <td>@item.ClientId</td>
+                                <td>@item.ComplaintDate</td>
+                                <td>@item.Type</td>
+                                <td>@item.SubType</td>
+                                <td>@item.ComplaintFeedbackRemarks</td>
+                                <td>@item.FeedBackPriority</td>
+                            </tr>
+                            }
+
+                       
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Hoverable Table rows  -->
+
+        <hr class="my-5" />
+
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+</div>
