@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Tkf_Complaint_System.Models
 {
@@ -20,6 +22,8 @@ namespace Tkf_Complaint_System.Models
         [Required]
         public string SubType { get; set; }
 
+
+
         [Required]
         public string ComplaintFeedbackRemarks { get; set; }
 
@@ -28,6 +32,21 @@ namespace Tkf_Complaint_System.Models
 
         public int ProjectId { get; set; }
 
-        public Project_tbl Project { get; set; }
+        public Project_tbl? Project { get; set; }
+
+
+        // 
+        [JsonIgnore]
+        public string FeedbackByAdmin { get; set; } = "";
+
+        [JsonIgnore]
+        public DateTime FeedbackResponseDate { get; set; }
+
+
+        public int StatusId { get; set; } 
+
+        // Navigation property for the Status relationship
+        [ForeignKey("StatusId")]
+        public Status? Status { get; set; }
     }
 }

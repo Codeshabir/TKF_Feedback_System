@@ -19,6 +19,7 @@ namespace Tkf_Complaint_System.Data
         public DbSet<ClientInformation> clientInformation { get; set; }
         public DbSet<Feedback> feedbacks { get; set; }
         public DbSet<Project_tbl> project_Tbls { get; set; }
+        public DbSet<Status> statuses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +28,7 @@ namespace Tkf_Complaint_System.Data
             modelBuilder.SeedData();
 
 
-       
+
             modelBuilder.Entity<Feedback>()
                 .HasOne(f => f.ClientInformation)
                 .WithMany(ci => ci.Feedbacks)
@@ -35,13 +36,16 @@ namespace Tkf_Complaint_System.Data
 
             modelBuilder.Entity<Feedback>()
                 .HasOne(f => f.Project)
-                .WithMany(p => p.Feedbacks)
-                .HasForeignKey(f => f.ProjectId);
+                .WithMany(p => p.Feedbacks);
+
+
+
         }
 
 
     }
 }
+
 
 
 

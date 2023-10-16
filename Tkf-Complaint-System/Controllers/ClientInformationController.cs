@@ -55,8 +55,10 @@ namespace Tkf_Complaint_System.Controllers
                     if (feedback.ComplaintDate.Kind != DateTimeKind.Utc)
                     {
                         feedback.ComplaintDate = feedback.ComplaintDate.ToUniversalTime();
+                        feedback.FeedbackResponseDate = feedback.ComplaintDate.ToUniversalTime();
                     }
                 }
+
             }
 
             _context.clientInformation.Add(clientInformation);

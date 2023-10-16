@@ -20,13 +20,8 @@ namespace Tkf_Complaint_System.Controllers
         [HttpGet("index")] 
         public ActionResult<DropDownViewModel> Index()
         {
-            var viewModel = new DropDownViewModel
-            {
-                Provinces = _context.provinces.ToList(),
-                // Other properties initialization can be done here
-            };
-
-            return Ok(viewModel); 
+            var provinces = _context.provinces.ToList();  
+            return Ok(provinces); 
         }
 
         [HttpGet("getdistricts")]
@@ -39,6 +34,7 @@ namespace Tkf_Complaint_System.Controllers
 
             return Ok(districts);
         }
+
 
         [HttpGet("getcities")]
         public ActionResult<IEnumerable<object>> GetCities(int districtId)

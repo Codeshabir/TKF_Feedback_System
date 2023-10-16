@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tkf_Complaint_System.Data;
@@ -11,9 +12,11 @@ using Tkf_Complaint_System.Data;
 namespace Tkf_Complaint_System.Migrations
 {
     [DbContext(typeof(Tkf_Complaint_System_Context))]
-    partial class Tkf_Complaint_System_ContextModelSnapshot : ModelSnapshot
+    [Migration("20231012144740_statustbl")]
+    partial class statustbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,9 +178,6 @@ namespace Tkf_Complaint_System.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StatusId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("SubType")
                         .IsRequired()
                         .HasColumnType("text");
@@ -191,8 +191,6 @@ namespace Tkf_Complaint_System.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("StatusId");
 
                     b.ToTable("feedbacks");
                 });
@@ -400,17 +398,9 @@ namespace Tkf_Complaint_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tkf_Complaint_System.Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ClientInformation");
 
                     b.Navigation("Project");
-
-                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.Project", b =>

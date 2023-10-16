@@ -29,6 +29,6 @@ namespace Tkf_Complaint_System.Models
         [Required]
         public string ProjectUC { get; set; }
 
-        public ICollection<Feedback> Feedbacks { get; set; }
+        public ICollection<Feedback>? Feedbacks { get; set; }
     }
 }

@@ -37,6 +37,7 @@ using System.ComponentModel.DataAnnotations;
         public string CallBackMethod { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
+
     
 
 }
