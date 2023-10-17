@@ -27,7 +27,8 @@ namespace Tkf_Complaint_System.Controllers
         public IActionResult Detail(int ClientId)
         {
             var clientInfo = _context.clientInformation
-                .Include(c => c.Feedbacks) // Include related feedback data
+                .Include(c => c.Feedbacks)
+                .ThenInclude(f => f.Project)// Include related feedback data
                 .FirstOrDefault(c => c.Id == ClientId);
 
             if (clientInfo != null)

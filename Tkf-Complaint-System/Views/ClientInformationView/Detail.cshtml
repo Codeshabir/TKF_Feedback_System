@@ -7,68 +7,170 @@
         <div class="col-xl-12">
             <div class="card mb-12">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Basic Layout</h5>
+                    <h5 class="mb-0">Client Information</h5>
                     <small class="text-muted float-end">Default label</small>
                 </div>
                 <div class="card-body">
-                    <form>
-                        <div class="row"> 
+                    <form asp-action="PostClientInformation" asp-controller="ClientInformation" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-fullname">Client Type</label>
-                                    <input type="text" class="form-control" id="@Model.ClientType" value="@Model.ClientType" readonly />
+                                    <input type="text" class="form-control" asp-for="ClientType" value="@Model.ClientType" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Gender</label>
-                                    <input type="text" class="form-control" id="@Model.Gender" value="@Model.Gender" readonly />
+                                    <input type="text" class="form-control" asp-for="Gender" value="@Model.Gender" readonly />
                                 </div>   
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Name</label>
-                                    <input type="text" class="form-control" id="@Model.Name" value="@Model.Name" readonly />
+                                    <input type="text" class="form-control" asp-for="Name" value="@Model.Name" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Age Group</label>
-                                    <input type="text" class="form-control" id="@Model.AgeGroup" value="@Model.AgeGroup" readonly />
+                                    <input type="text" class="form-control" asp-for="AgeGroup" value="@Model.AgeGroup" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Nationality</label>
-                                    <input type="text" class="form-control" id="@Model.Nationality" value="@Model.Nationality" readonly />
+                                    <input type="text" class="form-control" asp-for="Nationality" value="@Model.Nationality" readonly />
                                 </div>
 
+                            
 
-                                <div class="mb-3">
+                                 @foreach (var feedback in Model.Feedbacks)
+                                    {
+                                        @if (feedback.Project!=null)
+                                    {
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Project Name</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Project.ProjectName" value="@feedback.Project.ProjectName" readonly />
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Project Type</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Project.ProjectType" value="@feedback.Project.ProjectType" readonly />
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Project UC</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Project.ProjectUC" value="@feedback.Project.ProjectUC" readonly />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Project District</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Project.ProjectDistrict" value="@feedback.Project.ProjectDistrict" readonly />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Project Province</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Project.ProjectProvince" value="@feedback.Project.ProjectProvince" readonly />
+                                        </div>
+
+
+                                    }
+                                }
+                              
+                                @foreach (var feedback1 in Model.Feedbacks)
+                                {
+                                    <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Remarks By Admin</label>
-                                    <textarea type="text" class="form-control" id="remarksBy" value=""></textarea>
+                                    <textarea type="text" class="form-control" asp-for="@feedback1.FeedbackByAdmin" value="@feedback1.FeedbackByAdmin"></textarea>
                                 </div>
+                                }
+                               
+
                              
                             </div>
 
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-fullname">CNIC</label>
-                                    <input type="text" class="form-control" id="@Model.CNIC" value="@Model.CNIC" readonly />
+                                    <input type="text" class="form-control" asp-for="CNIC" value="@Model.CNIC" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Mobile No</label>
-                                    <input type="text" class="form-control" id="@Model.MobileNo" value="@Model.MobileNo" readonly />
+                                    <input type="text" class="form-control" asp-for="MobileNo" value="@Model.MobileNo" readonly />
+
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Email</label>
-                                    <input type="text" class="form-control" id="@Model.EmailID" value="@Model.EmailID" readonly />
+                                    <input type="text" class="form-control" asp-for="EmailID" value="@Model.EmailID" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Call Back Method</label>
-                                    <input type="text" class="form-control" id="@Model.CallBackMethod" value="@Model.CallBackMethod" readonly />
+                                    <input type="text" class="form-control" asp-for="CallBackMethod" value="@Model.CallBackMethod" readonly />
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="basic-default-company">Feedbacks</label>
-                                    
-                                        @foreach (var feedback in Model.Feedbacks)
+
+
+                                @if (Model.Feedbacks!= null)
+                                {
+                                    @foreach (var feedback in Model.Feedbacks)
+                                    {
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Feedbacks</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.ComplaintFeedbackRemarks" value="@feedback.ComplaintFeedbackRemarks" readonly />
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Complaint Type</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.Type" value="@feedback.Type" readonly />
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Complaint Sub Type</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.SubType" value="@feedback.SubType" readonly />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label" for="basic-default-company">Complaint Date</label>
+                                            <input type="text" class="form-control" asp-for="@feedback.ComplaintDate" value="@feedback.ComplaintDate" readonly />
+                                        </div>
+
+                                    }
+
+
+                                }
+                               
+                              
+
+
+
+                                @if (Model.Feedbacks!=null)
+                                {
+                                    @foreach (var feedback in Model.Feedbacks)
+                                    {
+                                        @if (feedback.Project != null)
                                         {
-                                        <input type="text" class="form-control" id="@feedback.ComplaintFeedbackRemarks" value="@feedback.ComplaintFeedbackRemarks" readonly/>
+
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="basic-default-company">Donor</label>
+                                                <input type="text" class="form-control" asp-for="@feedback.Project.Donor" value="@feedback.Project.Donor" readonly />
+                                            </div>
+
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="basic-default-company">Project Code</label>
+                                                <input type="text" class="form-control" asp-for="@feedback.Project.ProjectCode" value="@feedback.Project.ProjectCode" readonly />
+                                            </div>
+
+
+
                                         }
-                                   
-                                </div>
+                                    }
+
+
+                                }
+                               
+
+
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-company">Action</label>
                                         <div class="dropdown">
@@ -81,8 +183,8 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                                <a class="dropdown-item" href="javascript:void(0);">Received</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">In Progress</a>
+@*                                                <a class="dropdown-item" href="javascript:void(0);">Received</a>
+*@                                                <a class="dropdown-item" href="">In Progress</a>
                                                 <a class="dropdown-item" href="javascript:void(0);">Rejected</a>
                                                 <a class="dropdown-item" href="javascript:void(0);">Responded</a>
                                                 <a class="dropdown-item" href="javascript:void(0);">Closed</a>
