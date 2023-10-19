@@ -24,11 +24,23 @@ namespace Tkf_Complaint_System.Controllers
             return Ok(provinces); 
         }
 
+        //[HttpGet("getdistricts")]
+        //public ActionResult<IEnumerable<object>> GetDistricts(int provinceId)
+        //{
+        //    var districts = _context.districts
+        //        .Where(d => d.ProvinceId == provinceId)
+        //        .Select(d => new { d.DistrictId, d.DistrictName })
+        //        .ToList();
+
+        //    return Ok(districts);
+        //}
+
+
         [HttpGet("getdistricts")]
-        public ActionResult<IEnumerable<object>> GetDistricts(int provinceId)
+        public ActionResult<IEnumerable<object>> GetDistricts(string provinceName)
         {
             var districts = _context.districts
-                .Where(d => d.ProvinceId == provinceId)
+                .Where(d => d.Province.ProvinceName == provinceName)
                 .Select(d => new { d.DistrictId, d.DistrictName })
                 .ToList();
 
@@ -36,11 +48,13 @@ namespace Tkf_Complaint_System.Controllers
         }
 
 
+
+
         [HttpGet("getcities")]
-        public ActionResult<IEnumerable<object>> GetCities(int districtId)
+        public ActionResult<IEnumerable<object>> GetCities(string districtName)
         {
             var cities = _context.cities
-                .Where(c => c.DistrictId == districtId)
+                .Where(c => c.District.DistrictName == districtName)
                 .Select(c => new { c.CityId, c.CityName })
                 .ToList();
 
@@ -48,10 +62,10 @@ namespace Tkf_Complaint_System.Controllers
         }
 
         [HttpGet("getucs")]
-        public ActionResult<IEnumerable<object>> GetUCs(int cityId)
+        public ActionResult<IEnumerable<object>> GetUCs(string cityName)
         {
             var ucs = _context.uCs
-                .Where(uc => uc.CityId == cityId)
+                .Where(uc => uc.City.CityName == cityName)
                 .Select(uc => new { uc.UCId, uc.UCName })
                 .ToList();
 
@@ -59,10 +73,10 @@ namespace Tkf_Complaint_System.Controllers
         }
 
         [HttpGet("getprojects")]
-        public ActionResult<IEnumerable<object>> GetProjects(int ucId)
+        public ActionResult<IEnumerable<object>> GetProjects(string ucName)
         {
             var projects = _context.projects
-                .Where(p => p.UCId == ucId)
+                .Where(p => p.UC.UCName == ucName)
                 .Select(p => new { p.ProjectId, p.ProjectName })
                 .ToList();
 

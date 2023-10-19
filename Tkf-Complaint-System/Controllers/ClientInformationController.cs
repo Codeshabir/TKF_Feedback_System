@@ -114,6 +114,33 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
+        [HttpPut("feedback/{id}/")]
+        public IActionResult UpdateFeedback(int id, [FromBody] FeedbackUpdateModel updateModel)
+        {
+            var feedback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
+
+            if (feedback == null)
+            {
+                return NotFound(); 
+            }
+
+            feedback.StatusId = updateModel.Action;
+            feedback.FeedbackByAdmin = updateModel.Remarks;
+
+            _context.SaveChanges(); 
+
+            return RedirectToAction("Index", "ClientInformationView"); 
+        }
+
+
+        public class FeedbackUpdateModel
+        {
+            public int Action { get; set; }
+            public string Remarks { get; set; }
+        }
+
+
+
         private bool ClientInformationExists(int id)
         {
             return _context.clientInformation.Any(e => e.Id == id);

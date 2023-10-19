@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tkf_Complaint_System.Data;
+using Tkf_Complaint_System.Models;
 
 namespace Tkf_Complaint_System.Controllers
 {
@@ -13,9 +14,45 @@ namespace Tkf_Complaint_System.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var clientinfo = await _context.clientInformation.ToListAsync();
-            return View(clientinfo);
+            var clientInformationDTOList = await _context.clientInformation
+                .Include(c => c.Feedbacks)
+                .ThenInclude(f => f.Status)
+                .Select(ci => new ClientInformationDTO 
+                {
+                    Id = ci.Id,
+                    ClientType = ci.ClientType,
+                    Gender = ci.Gender,
+                    Name = ci.Name,
+                    AgeGroup = ci.AgeGroup,
+                    Nationality = ci.Nationality,
+                    CNIC = ci.CNIC,
+                    MobileNo = ci.MobileNo,
+                    EmailID = ci.EmailID,
+                    CallBackMethod = ci.CallBackMethod,
+                    Feedbacks = ci.Feedbacks.Select(f => new FeedbackDTO
+                    {
+                        Id = f.Id,
+                        ClientId = f.ClientId,
+                        ComplaintDate = f.ComplaintDate,
+                        Type = f.Type,
+                        SubType = f.SubType,
+                        ComplaintFeedbackRemarks = f.ComplaintFeedbackRemarks,
+                        FeedBackPriority = f.FeedBackPriority,
+                        ProjectId = f.ProjectId,
+                        FeedbackByAdmin = f.FeedbackByAdmin,
+                        FeedbackResponseDate = f.FeedbackResponseDate,
+                        StatusId = f.StatusId,
+                        StatusName = f.Status.StatusName,
+                        CreatedDate = f.Status.CreatedDate
+                    }).ToList()
+                })
+                .ToListAsync();
+
+
+            return View(clientInformationDTOList);
         }
+
+
 
         //public IActionResult Detail(int ClientId)
         //{
@@ -28,7 +65,7 @@ namespace Tkf_Complaint_System.Controllers
         {
             var clientInfo = _context.clientInformation
                 .Include(c => c.Feedbacks)
-                .ThenInclude(f => f.Project)// Include related feedback data
+                .ThenInclude(f => f.Project)
                 .FirstOrDefault(c => c.Id == ClientId);
 
             if (clientInfo != null)
@@ -36,8 +73,6 @@ namespace Tkf_Complaint_System.Controllers
                 return View(clientInfo);
             }
 
-            // Handle the case when the client with the given ClientId is not found.
-            // You can return a "Not Found" view or redirect to an error page.
             return NotFound();
         }
 

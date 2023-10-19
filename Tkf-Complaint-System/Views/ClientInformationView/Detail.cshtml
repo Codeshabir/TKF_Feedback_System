@@ -11,7 +11,7 @@
                     <small class="text-muted float-end">Default label</small>
                 </div>
                 <div class="card-body">
-                    <form asp-action="PostClientInformation" asp-controller="ClientInformation" method="post" enctype="application/x-www-form-urlencoded">
+                    <form>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
@@ -35,7 +35,8 @@
                                     <input type="text" class="form-control" asp-for="Nationality" value="@Model.Nationality" readonly />
                                 </div>
 
-                            
+                                <input type="hidden" id="recordIdInput" value="@Model.Id" />
+
 
                                  @foreach (var feedback in Model.Feedbacks)
                                     {
@@ -77,8 +78,8 @@
                                 @foreach (var feedback1 in Model.Feedbacks)
                                 {
                                     <div class="mb-3">
-                                    <label class="form-label" for="basic-default-company">Remarks By Admin</label>
-                                    <textarea type="text" class="form-control" asp-for="@feedback1.FeedbackByAdmin" value="@feedback1.FeedbackByAdmin"></textarea>
+                                        <label class="form-label" for="FeedbackByAdmin">Remarks By Admin</label>
+                                        <textarea type="text" class="form-control" id="FeedbackByAdmin" asp-for="@feedback1.FeedbackByAdmin" value="@feedback1.FeedbackByAdmin"></textarea>
                                 </div>
                                 }
                                
@@ -184,12 +185,13 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
 @*                                                <a class="dropdown-item" href="javascript:void(0);">Received</a>
-*@                                                <a class="dropdown-item" href="">In Progress</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Rejected</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Responded</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Closed</a>
+*@                                                <a class="dropdown-item" href="" value="2">In Progress</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" value="3">Rejected</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" value="4">Responded</a>
+                                                <a class="dropdown-item" href="javascript:void(0);" value="5">Closed</a>
                                             </div>
                                         </div>
+
                                 </div>
 
 
@@ -199,7 +201,7 @@
                         </div>
                        
                       
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button id="updateFeedbackButton" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
@@ -209,3 +211,6 @@
     
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/updateremarks.js"></script>
