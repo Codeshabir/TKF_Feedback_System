@@ -86,5 +86,9 @@ namespace Tkf_Complaint_System.Models
 
 
         internal List<FeedbackDTO> Feedbacks { get; set; }
+
+        internal List<ProjectDto> Projects { get; set; }
+
+
     }
 }
