@@ -12,12 +12,56 @@ namespace Tkf_Complaint_System.Controllers
         {
             _context = context;
         }
+        //public async Task<IActionResult> Index()
+        //{
+        //    var clientInformationDTOList = await _context.clientInformation
+        //        .Include(c => c.Feedbacks)
+        //        .ThenInclude(f => f.Status)
+        //        .Select(ci => new ClientInformationDTO 
+        //        {
+        //            Id = ci.Id,
+        //            ClientType = ci.ClientType,
+        //            Gender = ci.Gender,
+        //            Name = ci.Name,
+        //            AgeGroup = ci.AgeGroup,
+        //            Nationality = ci.Nationality,
+        //            CNIC = ci.CNIC,
+        //            MobileNo = ci.MobileNo,
+        //            EmailID = ci.EmailID,
+        //            CallBackMethod = ci.CallBackMethod,
+        //            Feedbacks = ci.Feedbacks.Select(f => new FeedbackDTO
+        //            {
+        //                Id = f.Id,
+        //                ClientId = f.ClientId,
+        //                ComplaintDate = f.ComplaintDate,
+        //                Type = f.Type,
+        //                SubType = f.SubType,
+        //                ComplaintFeedbackRemarks = f.ComplaintFeedbackRemarks,
+        //                FeedBackPriority = f.FeedBackPriority,
+        //                ProjectId = f.ProjectId,
+        //                FeedbackByAdmin = f.FeedbackByAdmin,
+        //                FeedbackResponseDate = f.FeedbackResponseDate,
+        //                StatusId = f.StatusId,
+        //                StatusName = f.Status.StatusName,
+        //                CreatedDate = f.Status.CreatedDate
+        //            }).ToList()
+        //        })
+        //        .ToListAsync();
+
+
+        //    return View(clientInformationDTOList);
+        //}
+
+
+
+
+
         public async Task<IActionResult> Index()
         {
             var clientInformationDTOList = await _context.clientInformation
                 .Include(c => c.Feedbacks)
                 .ThenInclude(f => f.Status)
-                .Select(ci => new ClientInformationDTO 
+                .Select(ci => new ClientInformationDTO
                 {
                     Id = ci.Id,
                     ClientType = ci.ClientType,
@@ -43,15 +87,24 @@ namespace Tkf_Complaint_System.Controllers
                         FeedbackResponseDate = f.FeedbackResponseDate,
                         StatusId = f.StatusId,
                         StatusName = f.Status.StatusName,
-                        CreatedDate = f.Status.CreatedDate
+                        CreatedDate = f.Status.CreatedDate,
+                        Project = new ProjectDto
+                        {
+                            Id = f.Project.Id, // Assuming this is the correct property
+                            Donor = f.Project.Donor,
+                            ProjectType = f.Project.ProjectType,
+                            ProjectCode = f.Project.ProjectCode,
+                            ProjectName = f.Project.ProjectName,
+                            ProjectProvince = f.Project.ProjectProvince,
+                            ProjectDistrict = f.Project.ProjectDistrict,
+                            ProjectUC = f.Project.ProjectUC
+                        }
                     }).ToList()
                 })
                 .ToListAsync();
 
-
             return View(clientInformationDTOList);
         }
-
 
 
         //public IActionResult Detail(int ClientId)

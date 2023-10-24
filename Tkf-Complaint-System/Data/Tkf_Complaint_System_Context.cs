@@ -27,23 +27,24 @@ namespace Tkf_Complaint_System.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.SeedData();
 
-
-
-            modelBuilder.Entity<Feedback>()
-                .HasOne(f => f.ClientInformation)
-                .WithMany(ci => ci.Feedbacks)
+            modelBuilder.Entity<ClientInformation>()
+                .HasMany(ci => ci.Feedbacks)
+                .WithOne(f => f.ClientInformation)
                 .HasForeignKey(f => f.ClientId);
 
             modelBuilder.Entity<Feedback>()
                 .HasOne(f => f.Project)
-                .WithMany(p => p.Feedbacks);
+                .WithMany(p => p.Feedbacks)
+                .HasForeignKey(f => f.ProjectId);
+        
 
 
-
-        }
 
 
     }
+
+
+}
 }
 
 

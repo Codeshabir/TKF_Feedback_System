@@ -15,5 +15,9 @@
         public int StatusId { get; set; }
         public string StatusName { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public ProjectDto Project { get; set; }
+
+
     }
 }

@@ -21,7 +21,16 @@ namespace Tkf_Complaint_System.Controllers
 
         public IActionResult Index()
         {
-            // Calculate the total number of statuses
+            var projectTotals = _context.feedbacks
+                .GroupBy(f => f.Project.ProjectName) // Group by ProjectName
+                .Select(g => new
+                {
+                    ProjectName = g.Key,
+                    Count = g.Count()
+                })
+                .ToDictionary(x => x.ProjectName, x => x.Count);
+            ViewBag.ProjectTotals = projectTotals;
+
             var statusTotals = _context.feedbacks
                 .Include(f => f.Status) // Include the associated Status
                 .GroupBy(f => f.Status.StatusName) // Group by StatusName
@@ -31,11 +40,24 @@ namespace Tkf_Complaint_System.Controllers
                     Count = g.Count()
                 })
                 .ToDictionary(x => x.StatusName, x => x.Count);
-
-            // Pass the status totals to the view
             ViewBag.StatusTotals = statusTotals;
 
+
+            var complaintTypeTotals = _context.feedbacks
+                .GroupBy(f => f.Type) // Group by ClientType
+                .Select(g => new
+                {
+                    ComplaintType = g.Key,
+                    Count = g.Count()
+                })
+                .ToDictionary(x => x.ComplaintType, x => x.Count);
+
+            // Pass the complaint type totals to the view
+            ViewBag.ComplaintTypeTotals = complaintTypeTotals;
+
+
             return View();
+
         }
 
 
