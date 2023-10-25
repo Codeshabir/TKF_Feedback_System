@@ -42,30 +42,109 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
-     
+
+
 
         [HttpPost]
-        public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)
+        public async Task<ActionResult<ClientInformation>> PostClientInformation([FromBody] ClientInformationDBDTO feedbackModel)
         {
-            // Convert the ComplaintDate property to UTC before saving
-            if (clientInformation.Feedbacks != null)
+            var clientInformation = new ClientInformation
             {
-                foreach (var feedback in clientInformation.Feedbacks)
-                {
-                    if (feedback.ComplaintDate.Kind != DateTimeKind.Utc)
-                    {
-                        feedback.ComplaintDate = feedback.ComplaintDate.ToUniversalTime();
-                        feedback.FeedbackResponseDate = feedback.ComplaintDate.ToUniversalTime();
-                    }
-                }
+                ClientType = feedbackModel.ClientType,
+                Gender = feedbackModel.Gender,
+                Name = feedbackModel.Name,
+                AgeGroup = feedbackModel.AgeGroup,
+                Nationality = feedbackModel.Nationality,
+                CNIC = feedbackModel.CNIC,
+                MobileNo = feedbackModel.MobileNo,
+                EmailID = feedbackModel.EmailID,
+                CallBackMethod = feedbackModel.CallBackMethod
+            };
 
-            }
+
+            var ucId = _context.uCs
+                .Where(p => p.UCName == feedbackModel.ProjectUC)
+                .Select(p => p.UCId)
+                .FirstOrDefault();
+
+            var projectId = _context.projects
+                            .Where(p => p.ProjectName == feedbackModel.ProjectName && p.UCId == ucId)
+                            .Select(p => p.ProjectId)
+                            .FirstOrDefault();
+
+
+            var random = new Random();
+            int newId;
+
+            do
+            {
+                newId = random.Next(1, int.MaxValue); // Generate a random integer ID
+            } while (_context.projects.Any(p => p.ProjectId == newId)); // Check if it's unique in your context
+
+
+
+            var project = new Project_tbl
+            {
+                Id = newId,
+                ProjectName = feedbackModel.ProjectName,
+                ProjectCode = "ABC-CODE",
+                ProjectDistrict = feedbackModel.ProjectDistrict,
+                ProjectProvince = feedbackModel.Province,
+                ProjectType = "abc",
+                ProjectUC = feedbackModel.ProjectUC,
+                Donor = "Donor",
+
+
+            };
+
+            var feedback = new Feedback
+            {
+                ComplaintDate = DateTime.UtcNow,
+                Type = feedbackModel.FeedbackType,
+                SubType = feedbackModel.FeedbackSubtype,
+                ComplaintFeedbackRemarks = feedbackModel.ComplaintFeedbackRemarks,
+                ClientInformation = clientInformation,
+                FeedBackPriority = "",
+                ProjectId = projectId,
+                StatusId = 1
+
+                // Project = project  // Assign the project to the feedback
+            };
+
+
+
 
             _context.clientInformation.Add(clientInformation);
+            _context.feedbacks.Add(feedback);
+            _context.project_Tbls.Add(project);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
         }
+
+
+        //[HttpPost]
+        //public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)
+        //{
+        //    // Convert the ComplaintDate property to UTC before saving
+        //    if (clientInformation.Feedbacks != null)
+        //    {
+        //        foreach (var feedback in clientInformation.Feedbacks)
+        //        {
+        //            if (feedback.ComplaintDate.Kind != DateTimeKind.Utc)
+        //            {
+        //                feedback.ComplaintDate = feedback.ComplaintDate.ToUniversalTime();
+        //                feedback.FeedbackResponseDate = feedback.ComplaintDate.ToUniversalTime();
+        //            }
+        //        }
+
+        //    }
+
+        //    _context.clientInformation.Add(clientInformation);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
+        //}
 
 
         // PUT: api/ClientInformation/5
@@ -114,40 +193,9 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
-        [HttpPut("feedback/{id}/")]
-        public IActionResult UpdateFeedback(int id, [FromBody] FeedbackUpdateModel updateModel)
-        {
-            var feedback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
-
-            if (feedback == null)
-            {
-                return NotFound(); 
-            }
-
-            feedback.StatusId = updateModel.Action;
-            feedback.FeedbackByAdmin = updateModel.Remarks;
-
-            _context.SaveChanges(); 
-
-            return RedirectToAction("Index", "ClientInformationView"); 
-        }
-
-
-        public class FeedbackUpdateModel
-        {
-            public int Action { get; set; }
-            public string Remarks { get; set; }
-        }
-
-
-
-
         private bool ClientInformationExists(int id)
         {
             return _context.clientInformation.Any(e => e.Id == id);
         }
     }
 }
-
-
-

@@ -111,7 +111,7 @@
                 <div class="row row-bordered g-0">
                     <div class="col-md-8">
                         <h5 class="card-header m-0 me-2 pb-3">Total Complaints</h5>
-                        <div id="totalRevenueChart" class="px-2"></div>
+                        <div id="complaintChart" class="px-2"></div>
                     </div>
                     <div class="col-md-4">
                         <div class="card-body">
@@ -158,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <!--/ Total Revenue -->
@@ -272,7 +273,7 @@
                     <div class="card-title mb-0">
                         <h5 class="m-0 me-2">Complaint Type</h5>
                     </div>
-                    <div class="dropdown">
+                   @* <div class="dropdown">
                         <button class="btn p-0"
                                 type="button"
                                 id="orederStatistics"
@@ -286,7 +287,7 @@
                             <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
                             <a class="dropdown-item" href="javascript:void(0);">Share</a>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -425,3 +426,13 @@
     </div>
 </div>
 
+
+
+
+<script>
+    var complaintTypeTotals = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ComplaintTypeTotals));
+</script>
+
+
+
+<script src="~/js/chartvalues.js"></script>
