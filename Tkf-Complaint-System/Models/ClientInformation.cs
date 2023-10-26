@@ -9,31 +9,31 @@ using System.ComponentModel.DataAnnotations;
     {
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
         public string ClientType { get; set; }
 
-        [Required]
+        //[Required]
         public string Gender { get; set; }
 
-        [Required]
+        //[Required]
         public string Name { get; set; }
 
         public string AgeGroup { get; set; }
 
-        [Required]
+        //[Required]
         public string Nationality { get; set; }
 
-        [Required]
+        //[Required]
         public string CNIC { get; set; }
 
-        [Required]
+        //[Required]
         public string MobileNo { get; set; }
 
-        [Required]
+        //[Required]
         [EmailAddress]
         public string EmailID { get; set; }
 
-        [Required]
+        //[Required]
         public string CallBackMethod { get; set; }
 
         public ICollection<Feedback>? Feedbacks { get; set; }

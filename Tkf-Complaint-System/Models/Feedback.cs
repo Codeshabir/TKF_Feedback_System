@@ -8,26 +8,26 @@ namespace Tkf_Complaint_System.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
         public int ClientId { get; set; }
 
         public ClientInformation? ClientInformation { get; set; }
 
-        [Required]
+        //[Required]
         public DateTime ComplaintDate { get; set; } 
 
-        [Required]
+        //[Required]
         public string Type { get; set; }
 
-        [Required]
+        //[Required]
         public string SubType { get; set; }
 
 
 
-        [Required]
+        //[Required]
         public string ComplaintFeedbackRemarks { get; set; }
 
-        [Required]
+        //[Required]
         public string FeedBackPriority { get; set; }
 
         public int ProjectId { get; set; }

@@ -13,6 +13,7 @@ namespace Tkf_Complaint_System.Data
         public DbSet<District> districts { get; set; }
         public DbSet<City> cities { get; set; }
         public DbSet<UC> uCs { get; set; }
+        public DbSet<Village> villages { get; set; }
         public DbSet<Project> projects { get; set; }
 
         // Client Info

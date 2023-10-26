@@ -8,25 +8,25 @@ namespace Tkf_Complaint_System.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        //[Required]
         public string Donor { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectType { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectCode { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectName { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectProvince { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectDistrict { get; set; }
 
-        [Required]
+        //[Required]
         public string ProjectUC { get; set; }
 
         public ICollection<Feedback>? Feedbacks { get; set; }

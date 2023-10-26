@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tkf_Complaint_System.Data;
@@ -11,9 +12,11 @@ using Tkf_Complaint_System.Data;
 namespace Tkf_Complaint_System.Migrations
 {
     [DbContext(typeof(Tkf_Complaint_System_Context))]
-    partial class Tkf_Complaint_System_ContextModelSnapshot : ModelSnapshot
+    [Migration("20231026094301_removing_requiredtags")]
+    partial class removing_requiredtags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,12 +212,12 @@ namespace Tkf_Complaint_System.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("VillageId")
+                    b.Property<int>("UCId")
                         .HasColumnType("integer");
 
                     b.HasKey("ProjectId");
 
-                    b.HasIndex("VillageId");
+                    b.HasIndex("UCId");
 
                     b.ToTable("projects");
 
@@ -222,14 +225,14 @@ namespace Tkf_Complaint_System.Migrations
                         new
                         {
                             ProjectId = 1,
-                            ProjectName = "UNICEF - KHI",
-                            VillageId = 1
+                            ProjectName = "Karachi",
+                            UCId = 2
                         },
                         new
                         {
                             ProjectId = 2,
-                            ProjectName = "UNICEF - Quetta",
-                            VillageId = 2
+                            ProjectName = "Quetta",
+                            UCId = 1
                         });
                 });
 
@@ -334,6 +337,9 @@ namespace Tkf_Complaint_System.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("DistrictId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UCName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -341,6 +347,8 @@ namespace Tkf_Complaint_System.Migrations
                     b.HasKey("UCId");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("DistrictId");
 
                     b.ToTable("uCs");
 
@@ -359,46 +367,10 @@ namespace Tkf_Complaint_System.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Tkf_Complaint_System.Models.Village", b =>
-                {
-                    b.Property<int>("VillageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VillageId"));
-
-                    b.Property<int>("UCId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("VillageName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("VillageId");
-
-                    b.HasIndex("UCId");
-
-                    b.ToTable("villages");
-
-                    b.HasData(
-                        new
-                        {
-                            VillageId = 1,
-                            UCId = 1,
-                            VillageName = "village1"
-                        },
-                        new
-                        {
-                            VillageId = 2,
-                            UCId = 2,
-                            VillageName = "Quetta"
-                        });
-                });
-
             modelBuilder.Entity("Tkf_Complaint_System.Models.City", b =>
                 {
                     b.HasOne("Tkf_Complaint_System.Models.District", "District")
-                        .WithMany("cities")
+                        .WithMany()
                         .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -446,40 +418,28 @@ namespace Tkf_Complaint_System.Migrations
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.Project", b =>
                 {
-                    b.HasOne("Tkf_Complaint_System.Models.Village", "village")
-                        .WithMany("projects")
-                        .HasForeignKey("VillageId")
+                    b.HasOne("Tkf_Complaint_System.Models.UC", "UC")
+                        .WithMany("Projects")
+                        .HasForeignKey("UCId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("village");
+                    b.Navigation("UC");
                 });
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.UC", b =>
                 {
                     b.HasOne("Tkf_Complaint_System.Models.City", "City")
-                        .WithMany("UCs")
+                        .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tkf_Complaint_System.Models.District", null)
+                        .WithMany("UCs")
+                        .HasForeignKey("DistrictId");
+
                     b.Navigation("City");
-                });
-
-            modelBuilder.Entity("Tkf_Complaint_System.Models.Village", b =>
-                {
-                    b.HasOne("Tkf_Complaint_System.Models.UC", "uC")
-                        .WithMany("villages")
-                        .HasForeignKey("UCId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("uC");
-                });
-
-            modelBuilder.Entity("Tkf_Complaint_System.Models.City", b =>
-                {
-                    b.Navigation("UCs");
                 });
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.ClientInformation", b =>
@@ -489,7 +449,7 @@ namespace Tkf_Complaint_System.Migrations
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.District", b =>
                 {
-                    b.Navigation("cities");
+                    b.Navigation("UCs");
                 });
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.Project_tbl", b =>
@@ -504,12 +464,7 @@ namespace Tkf_Complaint_System.Migrations
 
             modelBuilder.Entity("Tkf_Complaint_System.Models.UC", b =>
                 {
-                    b.Navigation("villages");
-                });
-
-            modelBuilder.Entity("Tkf_Complaint_System.Models.Village", b =>
-                {
-                    b.Navigation("projects");
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

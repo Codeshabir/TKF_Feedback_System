@@ -72,11 +72,23 @@ namespace Tkf_Complaint_System.Controllers
             return Ok(ucs);
         }
 
-        [HttpGet("getprojects")]
-        public ActionResult<IEnumerable<object>> GetProjects(string ucName)
+        [HttpGet("getvillages")]
+        public ActionResult<IEnumerable<object>> GetVillages(string ucName)
+        {
+            var projects = _context.villages
+                .Where(p => p.uC.UCName == ucName)
+                .Select(p => new { p.VillageId, p.VillageName })
+                .ToList();
+
+            return Ok(projects);
+        }
+
+
+         [HttpGet("getprojects")]
+        public ActionResult<IEnumerable<object>> GetProjects(string villageName)
         {
             var projects = _context.projects
-                .Where(p => p.UC.UCName == ucName)
+                .Where(p => p.village.VillageName == villageName)
                 .Select(p => new { p.ProjectId, p.ProjectName })
                 .ToList();
 

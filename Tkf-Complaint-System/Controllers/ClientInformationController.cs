@@ -44,6 +44,33 @@ namespace Tkf_Complaint_System.Controllers
 
 
 
+        //[HttpPost]
+        //public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)
+        //{
+        //    // Convert the ComplaintDate property to UTC before saving
+        //    if (clientInformation.Feedbacks != null)
+        //    {
+        //        foreach (var feedback in clientInformation.Feedbacks)
+        //        {
+        //            if (feedback.ComplaintDate.Kind != DateTimeKind.Utc)
+        //            {
+        //                feedback.ComplaintDate = feedback.ComplaintDate.ToUniversalTime();
+        //                feedback.FeedbackResponseDate = feedback.ComplaintDate.ToUniversalTime();
+        //            }
+        //        }
+
+        //    }
+
+        //    _context.clientInformation.Add(clientInformation);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
+        //}
+
+
+
+
+
 
         [HttpPost]
         public async Task<ActionResult<ClientInformation>> PostClientInformation([FromBody] ClientInformationDBDTO feedbackModel)
@@ -62,13 +89,15 @@ namespace Tkf_Complaint_System.Controllers
             };
 
 
-            var ucId = _context.uCs
-                .Where(p => p.UCName == feedbackModel.ProjectUC)
+
+
+            var villageId = _context.villages
+                .Where(p => p.VillageName == feedbackModel.ProjectVillage)
                 .Select(p => p.UCId)
                 .FirstOrDefault();
 
             var projectId = _context.projects
-                            .Where(p => p.ProjectName == feedbackModel.ProjectName && p.UCId == ucId)
+                            .Where(p => p.ProjectName == feedbackModel.ProjectName && p.VillageId == villageId)
                             .Select(p => p.ProjectId)
                             .FirstOrDefault();
 
@@ -123,29 +152,6 @@ namespace Tkf_Complaint_System.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<ActionResult<ClientInformation>> PostClientInformation(ClientInformation clientInformation)
-        //{
-        //    // Convert the ComplaintDate property to UTC before saving
-        //    if (clientInformation.Feedbacks != null)
-        //    {
-        //        foreach (var feedback in clientInformation.Feedbacks)
-        //        {
-        //            if (feedback.ComplaintDate.Kind != DateTimeKind.Utc)
-        //            {
-        //                feedback.ComplaintDate = feedback.ComplaintDate.ToUniversalTime();
-        //                feedback.FeedbackResponseDate = feedback.ComplaintDate.ToUniversalTime();
-        //            }
-        //        }
-
-        //    }
-
-        //    _context.clientInformation.Add(clientInformation);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
-        //}
-
 
         // PUT: api/ClientInformation/5
         [HttpPut("{id}")]
@@ -193,9 +199,41 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
+        [HttpPut("feedback/{id}/")]
+        public IActionResult UpdateFeedback(int id, [FromBody] FeedbackUpdateModel updateModel)
+        {
+            var feedback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
+
+            if (feedback == null)
+            {
+                return NotFound(); 
+            }
+
+            feedback.StatusId = updateModel.Action;
+            feedback.FeedbackByAdmin = updateModel.Remarks;
+
+            _context.SaveChanges();
+
+            return Redirect("https://localhost:7217/ClientInformationView/Index");
+       
+        }
+
+
+        public class FeedbackUpdateModel
+        {
+            public int Action { get; set; }
+            public string Remarks { get; set; }
+        }
+
+
+
+
         private bool ClientInformationExists(int id)
         {
             return _context.clientInformation.Any(e => e.Id == id);
         }
     }
 }
+
+
+
