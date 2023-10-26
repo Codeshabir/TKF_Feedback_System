@@ -32,11 +32,6 @@ namespace Tkf_Complaint_System.Models
 
         public string VillageName { get; set; }
 
-
-        
-
-
-
         public ICollection<Feedback>? Feedbacks { get; set; }
     }
 }

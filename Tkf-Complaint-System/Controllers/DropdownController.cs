@@ -47,9 +47,6 @@ namespace Tkf_Complaint_System.Controllers
             return Ok(districts);
         }
 
-
-
-
         [HttpGet("getcities")]
         public ActionResult<IEnumerable<object>> GetCities(string districtName)
         {
@@ -83,7 +80,6 @@ namespace Tkf_Complaint_System.Controllers
             return Ok(projects);
         }
 
-
          [HttpGet("getprojects")]
         public ActionResult<IEnumerable<object>> GetProjects(string villageName)
         {
@@ -95,6 +91,23 @@ namespace Tkf_Complaint_System.Controllers
             return Ok(projects);
         }
 
-        
+        [HttpGet("getfeedbacktypes")]
+        public ActionResult<FeedbackTypes> GetFeedbackTypes()
+        {
+            var feedbackTypes = _context.feedbackTypes
+                .ToList();
+            return Ok(feedbackTypes);
+        }
+
+        [HttpGet("getfeedbacksubtypes")]
+        public ActionResult<IEnumerable<object>> GetFeedbackSubTypes(string feedbacktype)
+        {
+            var feedbackTypes = _context.feedbackSubtypes
+                .Where(f=> f.FeedbackType.FeedbackType == feedbacktype)
+                .Select(f=> new {f.Id, f.FeedbackSubtype })
+                .ToList();
+            return Ok(feedbackTypes);
+        }
+
     }
 }

@@ -20,8 +20,8 @@
         public string ProjectName { get; set; }
         public string ProjectUC { get; set; }
         public string Province { get; set; }
-        public string Subject { get; set; }
-        public string Type { get; set; }
+        //public string Subject { get; set; }
+        //public string Type { get; set; }
         public string FeedBackPriority { get; set; } = "";
         public string ProjectVillage { get; set; }
 

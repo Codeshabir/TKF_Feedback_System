@@ -23,6 +23,11 @@ namespace Tkf_Complaint_System.Data
         public DbSet<Status> statuses { get; set; }
 
 
+        // Feedback Type & Subtypes
+
+        public DbSet<FeedbackTypes> feedbackTypes { get; set; }
+        public DbSet<FeedbackSubtypes> feedbackSubtypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tkf_Complaint_System.Models
@@ -8,26 +10,22 @@ namespace Tkf_Complaint_System.Models
         [Key]
         public int Id { get; set; }
         public string FeedbackType { get; set; }
-        public DateTime CreatedAT { get; set; }
-        public bool isActive { get; set; }
-        public ICollection<FeedbackSubtypes>feedbackSubtypes { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
+        public ICollection<FeedbackSubtypes> FeedbackSubtypes { get; set; }
     }
 
     public class FeedbackSubtypes
     {
         [Key]
         public int Id { get; set; }
-        
         public string FeedbackSubtype { get; set; }
+        public int FeedbackTypeId { get; set; }
 
+        [ForeignKey("FeedbackTypeId")]
+        public FeedbackTypes FeedbackType { get; set; }
 
-        public int Feedbacktype { get; set; }
-
-        [ForeignKey("Feedbacktype")]
-        public FeedbackTypes FeedbackTypes { get; set; }
-
-        public DateTime CreatedAT { get; set;}
-        public bool isActive { get; set; }
-
+        public DateTime CreatedAt { get; set; }
+        public bool IsActive { get; set; }
     }
 }
