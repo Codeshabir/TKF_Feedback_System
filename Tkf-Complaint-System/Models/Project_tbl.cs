@@ -26,8 +26,16 @@ namespace Tkf_Complaint_System.Models
         //[Required]
         public string ProjectDistrict { get; set; }
 
+        public string CityName { get; set; }
         //[Required]
         public string ProjectUC { get; set; }
+
+        public string VillageName { get; set; }
+
+
+        
+
+
 
         public ICollection<Feedback>? Feedbacks { get; set; }
     }

@@ -22,8 +22,6 @@ namespace Tkf_Complaint_System.Models
         //[Required]
         public string SubType { get; set; }
 
-
-
         //[Required]
         public string ComplaintFeedbackRemarks { get; set; }
 
@@ -34,14 +32,12 @@ namespace Tkf_Complaint_System.Models
 
         public Project_tbl? Project { get; set; }
 
-
         // 
         [JsonIgnore]
         public string FeedbackByAdmin { get; set; } = "";
 
         [JsonIgnore]
         public DateTime FeedbackResponseDate { get; set; }
-
 
         public int StatusId { get; set; } 
 
