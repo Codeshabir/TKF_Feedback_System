@@ -199,31 +199,26 @@ namespace Tkf_Complaint_System.Controllers
             return clientInformation;
         }
 
-        [HttpPut("feedback/{id}/")]
-        public IActionResult UpdateFeedback(int id, [FromBody] FeedbackUpdateModel updateModel)
-        {
-            var feedback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
-
-            if (feedback == null)
-            {
-                return NotFound(); 
-            }
-
-            feedback.StatusId = updateModel.Action;
-            feedback.FeedbackByAdmin = updateModel.Remarks;
-
-            _context.SaveChanges();
-
-            return Redirect("https://localhost:7217/ClientInformationView/Index");
+        //[HttpPut("feedback/{id}/")]
+        //public IActionResult UpdateFeedback(int id, [FromBody] FeedbackUpdateModel updateModel)
+        //{
+        //    var feedback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
+        //    if (feedback == null)
+        //    {
+        //        return NotFound(); 
+        //    }
+        //    feedback.StatusId = updateModel.Action;
+        //    feedback.FeedbackByAdmin = updateModel.Remarks;
+        //    _context.SaveChanges();
+        //    return Redirect("https://localhost:7217/ClientInformationView/Index");
        
-        }
+        //}
 
-
-        public class FeedbackUpdateModel
-        {
-            public int Action { get; set; }
-            public string Remarks { get; set; }
-        }
+        //public class FeedbackUpdateModel
+        //{
+        //    public int Action { get; set; }
+        //    public string Remarks { get; set; }
+        //}
 
 
 

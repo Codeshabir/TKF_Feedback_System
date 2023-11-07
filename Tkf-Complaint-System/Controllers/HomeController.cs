@@ -66,8 +66,11 @@ namespace Tkf_Complaint_System.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(string? projectName)
         {
+
+
+            // Project
             var projectTotals = _context.feedbacks
                 .GroupBy(f => f.Project.ProjectName)
                 .Select(g => new
@@ -78,6 +81,10 @@ namespace Tkf_Complaint_System.Controllers
                 .ToDictionary(x => x.ProjectName, x => x.Count);
             ViewBag.ProjectTotals = projectTotals;
 
+            
+            
+            // Status
+            
             var statusTotals = _context.feedbacks
                 .Include(f => f.Status)
                 .GroupBy(f => f.Status.StatusName)
@@ -89,19 +96,47 @@ namespace Tkf_Complaint_System.Controllers
                 .ToDictionary(x => x.StatusName, x => x.Count);
             ViewBag.StatusTotals = statusTotals;
 
-            var complaintTypeTotals = _context.feedbacks
-                .GroupBy(f => f.Type)
-                .Select(g => new
-                {
-                    ComplaintType = g.Key,
-                    Count = g.Count()
-                })
-                .ToDictionary(x => x.ComplaintType, x => x.Count);
-           ViewBag.ComplaintTypeTotals = complaintTypeTotals;
+            if (projectName == null)
+            {
+                // Project Wise Complaint 
+                var complaintTypeTotals = _context.feedbacks
+                    .GroupBy(f => f.SubType)
+                    .Select(g => new
+                    {
+                        ComplaintType = g.Key,
+                        Count = g.Count()
+                    })
+                    .ToDictionary(x => x.ComplaintType, x => x.Count);
+                ViewBag.ComplaintTypeTotals = complaintTypeTotals;
 
-            ViewBag.ComplaintTypeTotalsJson = JsonConvert.SerializeObject(complaintTypeTotals);
+            }
+            else
+            {
+                var feedbacksForSelectedProject = _context.feedbacks
+                .Where(f => f.Project.ProjectName == projectName)
+                .ToList();
 
-                    var aggregatedData = _context.feedbacks
+                // Group feedbacks by the actual ComplaintType
+                var complaintType = feedbacksForSelectedProject
+                    .GroupBy(f => f.SubType)
+                    .Select(g => new
+                    {
+                        ComplaintType = g.Key, // Use the actual ComplaintType
+                        Count = g.Count()
+                    })
+                    .ToDictionary(x => x.ComplaintType, x => x.Count);
+
+                ViewBag.ComplaintTypes = complaintType;
+                Console.WriteLine($"ComplaintTypes count: {complaintType.Count}");
+
+
+
+
+            }
+
+            // ViewBag.ComplaintTypeTotalsJson = JsonConvert.SerializeObject(complaintTypeTotals);
+
+            var aggregatedData = _context.feedbacks
                   .GroupBy(f => new
                   {
                       Year = f.ComplaintDate.Year,
@@ -128,11 +163,44 @@ namespace Tkf_Complaint_System.Controllers
                   })
                   .ToList();
 
-                        ViewBag.ComplaintData = JsonConvert.SerializeObject(aggregatedData);
+                        //ViewBag.ComplaintData = JsonConvert.SerializeObject(aggregatedData);
 
 
             return View();
         }
+
+
+        public IActionResult SelectedProjGraph(string projectName)
+        {
+            try
+            {
+                var feedbacksForSelectedProject = _context.feedbacks
+               .Where(f => f.Project.ProjectName == projectName)
+               .ToList();
+
+                // Group feedbacks by the actual ComplaintType
+                var complaintType = feedbacksForSelectedProject
+                    .GroupBy(f => f.SubType)
+                    .Select(g => new
+                    {
+                        ComplaintType = g.Key, // Use the actual ComplaintType
+                        Count = g.Count()
+                    })
+                    .ToDictionary(x => x.ComplaintType, x => x.Count);
+
+                ViewBag.ComplaintTypes = complaintType;
+                Console.WriteLine($"ComplaintTypes count: {complaintType.Count}");
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions or errors here
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+            
+        }
+
 
 
         public IActionResult Privacy()

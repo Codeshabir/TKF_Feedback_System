@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Tkf_Complaint_System.Data;
 using Tkf_Complaint_System.Models;
+using static Tkf_Complaint_System.Controllers.ClientInformationController;
 
 namespace Tkf_Complaint_System.Controllers
 {
@@ -53,8 +54,36 @@ namespace Tkf_Complaint_System.Controllers
         //}
 
 
+        public IActionResult UpdateFeedback(FeedbackUpdateViewModel updateModel)
+        {
+            try
+            {
+                var id = updateModel.id;
+                var fdback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
+
+                if (fdback == null)
+                {
+                    return NotFound(new { message = "Feedback not found." });
+                }
+
+                fdback.StatusId = updateModel.Action;
+                fdback.FeedbackByAdmin = updateModel.Remarks;
+                _context.SaveChanges();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred: " + ex.Message });
+            }
 
 
+        }
+        public class FeedbackUpdateViewModel
+        {
+            public int id { get; set; }
+            public int Action { get; set; }
+            public string Remarks { get; set; }
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -107,32 +136,26 @@ namespace Tkf_Complaint_System.Controllers
         }
 
 
-        //public IActionResult Detail(int ClientId)
-        //{
-        //    var clientinfo = _context.clientInformation.FirstOrDefault();
-        //    return View(clientinfo);
-        //   // return View();
-        //}
-
         public IActionResult Detail(int ClientId)
         {
-            var clientInfo = _context.clientInformation
-                .Include(c => c.Feedbacks)
-                .ThenInclude(f => f.Project)
-                .FirstOrDefault(c => c.Id == ClientId);
-
-            if (clientInfo != null)
+            try
             {
-                return View(clientInfo);
+                var clientInfo = _context.clientInformation
+                    .Include(c => c.Feedbacks)
+                    .ThenInclude(f => f.Project)
+                    .FirstOrDefault(c => c.Id == ClientId);
+                if (clientInfo != null)
+                {
+                    return View(clientInfo);
+                }
+                return NotFound();
+
             }
+            catch   (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred: " + ex.Message });
 
-            return NotFound();
+            }
         }
-
-
-
-
-
-
     }
 }
