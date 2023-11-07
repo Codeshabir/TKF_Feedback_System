@@ -69,7 +69,7 @@ namespace Tkf_Complaint_System.Controllers
                 fdback.StatusId = updateModel.Action;
                 fdback.FeedbackByAdmin = updateModel.Remarks;
                 _context.SaveChanges();
-                return View();
+                return Json(new {message = "Success"});
             }
             catch (Exception ex)
             {

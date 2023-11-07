@@ -8,32 +8,24 @@ using System.ComponentModel.DataAnnotations;
     public class ClientInformation
     {
         public int Id { get; set; }
-
-        //[Required]
         public string ClientType { get; set; }
+        //adding additional fields for Other's Screen
+        public string OtherType { get; set; }
+        public string OthersCompanyName { get; set; }
+        // end 
 
-        //[Required]
         public string Gender { get; set; }
-
-        //[Required]
         public string Name { get; set; }
-
         public string AgeGroup { get; set; }
 
-        //[Required]
         public string Nationality { get; set; }
 
-        //[Required]
         public string CNIC { get; set; }
 
-        //[Required]
         public string MobileNo { get; set; }
-
-        //[Required]
         [EmailAddress]
         public string EmailID { get; set; }
 
-        //[Required]
         public string CallBackMethod { get; set; }
 
         public ICollection<Feedback>? Feedbacks { get; set; }

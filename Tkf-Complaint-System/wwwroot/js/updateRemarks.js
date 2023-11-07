@@ -14,9 +14,9 @@ $(document).ready(function () {
     });
 
     $("#updateFeedbackButton").click(function () {
-        debugger
+        debugger;
         var statusId = selectedStatusId;
-        id = $("#recordIdInput").val();
+        var id = $("#recordIdInput").val();
         var remarks = $("#FeedbackByAdmin").val();
 
         var formData = new FormData();
@@ -26,18 +26,23 @@ $(document).ready(function () {
 
         $.ajax({
             url: "/ClientInformationView/UpdateFeedback",
-            type: "POST", 
+            type: "POST",
             data: formData,
-            processData: false, 
-            contentType: false, 
-            success: function () {
-                alert("Feedback updated successfully.");
-               // window.location.href = '/ClientInformationView/Index';
-
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data.message === "Success") {
+                    alert("Feedback updated successfully.");
+                    window.location.href = '/ClientInformationView/Index';
+                } else {
+                    alert("Update failed: " + data.message);
+                }
             },
             error: function (xhr, status, error) {
                 alert("Error: " + error);
             }
         });
     });
+
 });

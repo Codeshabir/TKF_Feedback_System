@@ -85,7 +85,9 @@ namespace Tkf_Complaint_System.Controllers
                 CNIC = feedbackModel.CNIC,
                 MobileNo = feedbackModel.MobileNo,
                 EmailID = feedbackModel.EmailID,
-                CallBackMethod = feedbackModel.CallBackMethod
+                CallBackMethod = feedbackModel.CallBackMethod,
+                OtherType = feedbackModel.OtherType,
+                OthersCompanyName = feedbackModel.OthersCompanyName
             };
 
 
