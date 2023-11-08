@@ -70,27 +70,50 @@ namespace Tkf_Complaint_System.Controllers
 
 
 
-
-
         [HttpPost]
         public async Task<ActionResult<ClientInformation>> PostClientInformation([FromBody] ClientInformationDBDTO feedbackModel)
         {
-            var clientInformation = new ClientInformation
+            var ClientType = feedbackModel.ClientType;
+            ClientInformation clientInformation;
+
+            if (ClientType == "OTHER")
             {
-                ClientType = feedbackModel.ClientType,
-                Gender = feedbackModel.Gender,
-                Name = feedbackModel.Name,
-                AgeGroup = feedbackModel.AgeGroup,
-                Nationality = feedbackModel.Nationality,
-                CNIC = feedbackModel.CNIC,
-                MobileNo = feedbackModel.MobileNo,
-                EmailID = feedbackModel.EmailID,
-                CallBackMethod = feedbackModel.CallBackMethod,
-                OtherType = feedbackModel.OtherType,
-                OthersCompanyName = feedbackModel.OthersCompanyName
-            };
+                clientInformation = new ClientInformation
+                {
+                    ClientType = feedbackModel.ClientType,
+                    Gender = "",
+                    Name = feedbackModel.Name,
+                    AgeGroup = "",
+                    Nationality = "",
+                    CNIC = "",
+                    MobileNo = feedbackModel.MobileNo,
+                    EmailID = feedbackModel.EmailID,
+                    CallBackMethod = feedbackModel.CallBackMethod,
+                    OtherType = feedbackModel.OtherType,
+                    OthersCompanyName = feedbackModel.OthersCompanyName
+                };
 
+            }
 
+            else
+            {
+                clientInformation = new ClientInformation
+                {
+                    ClientType = feedbackModel.ClientType,
+                    Gender = feedbackModel.Gender,
+                    Name = feedbackModel.Name,
+                    AgeGroup = feedbackModel.AgeGroup,
+                    Nationality = feedbackModel.Nationality,
+                    CNIC = feedbackModel.CNIC,
+                    MobileNo = feedbackModel.MobileNo,
+                    EmailID = feedbackModel.EmailID,
+                    CallBackMethod = feedbackModel.CallBackMethod,
+                    OtherType = feedbackModel.OtherType,
+                    OthersCompanyName = feedbackModel.OthersCompanyName
+                };
+            }
+             
+            
 
 
             var villageId = _context.villages
@@ -124,6 +147,9 @@ namespace Tkf_Complaint_System.Controllers
                 ProjectType = "abc",
                 ProjectUC = feedbackModel.ProjectUC,
                 Donor = "Donor",
+                CityName = feedbackModel.ProjectCity,
+                VillageName = feedbackModel.ProjectVillage
+
 
 
             };
@@ -150,10 +176,8 @@ namespace Tkf_Complaint_System.Controllers
             _context.project_Tbls.Add(project);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetClientInformation), new { id = clientInformation.Id }, clientInformation);
+            return Ok();
         }
-
-
 
         // PUT: api/ClientInformation/5
         [HttpPut("{id}")]

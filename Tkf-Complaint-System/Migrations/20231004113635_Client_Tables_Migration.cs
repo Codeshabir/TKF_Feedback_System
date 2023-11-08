@@ -17,13 +17,13 @@ namespace Tkf_Complaint_System.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ClientType = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     AgeGroup = table.Column<string>(type: "text", nullable: false),
                     Nationality = table.Column<string>(type: "text", nullable: false),
-                    CNIC = table.Column<string>(type: "text", nullable: false),
+                    CNIC = table.Column<string>(type: "text", nullable: false), // Set as nullable
                     MobileNo = table.Column<string>(type: "text", nullable: false),
                     EmailID = table.Column<string>(type: "text", nullable: false),
                     CallBackMethod = table.Column<string>(type: "text", nullable: false)

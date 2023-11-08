@@ -1,4 +1,13 @@
 ﻿@model List<ClientInformationDTO>
+<!-- jQuery -->
+
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
 <div class="content-wrapper">
     <!-- Content -->
 
@@ -10,7 +19,7 @@
         <div class="card">
             <h5 class="card-header">Client Information</h5>
             <div class="table-responsive text-nowrap">
-                <table class="table table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                    
                     <thead>
                         <tr>
@@ -18,16 +27,10 @@
                             <th>Client Type</th>
                             <th>Gender</th>
                             <th>Name</th>
-
                             <th>Age Group</th>
-
                             <th>Nationality</th>
-
                             <th>CNIC</th>
-@*                            <th>Mobile No.</th>
-*@                            <th>Status.</th>
-                          @*  <th>Email</th>
-                            <th>Call Back Method</th>*@
+                           <th>Status.</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,19 +44,8 @@
                                 <td>@item.AgeGroup</td>
                                 <td>@item.Nationality</td>
                                 <td>@item.CNIC</td>
-@*                                <td>@item.MobileNo</td>
-*@                              @*  <td><span class="badge bg-label-danger me-1">Rejected</span></td>
-                                <td><span class="badge bg-label-success me-1">Processed</span></td>
-                                <td><span class="badge bg-label-info me-1">On Process</span></td>*@
-
-
-
-
-
-
+                         
                                 <td><span class="badge bg-label-warning me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-
 
                                 <td>
                                     <div class="dropdown">
@@ -66,19 +58,7 @@
                                         </div>
                                     </div>
                                 </td>
-                               @* <td>
-                                    <a href="@Url.Action("Details", "Form", new { id = item.Id })">
-                                        <span class="bi bi-info-circle"></span> <!-- Details icon -->
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Delete", "Form", new { id = item.Id })">
-                                        <span class="bi bi-trash"></span> <!-- Delete icon -->
-                                    </a>
-                                </td>
-*@
-                             @*   <td>@item.EmailID</td>
-                                <td>@item.MobileNo</td>*@
+                            
                             </tr>
                         }
                       
@@ -98,3 +78,24 @@
     </div>
     <!-- Content wrapper -->
 </div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true, // Enable searching
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "buttons": true,
+            "columnDefs": [
+                { "type": "html", "targets": "_all" } // Set the data type to "html" for all columns
+            ]
+        });
+    });
+</script>
+
