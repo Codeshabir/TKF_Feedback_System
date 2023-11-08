@@ -25,10 +25,14 @@
         public string FeedBackPriority { get; set; } = "";
         public string ProjectVillage { get; set; }
         //adding additional fields for Other's Screen
-        public string OtherType { get; set; }
-        public string OthersCompanyName { get; set; }
-        // end 
+        public string? OtherType { get; set; }
+        public string? OthersCompanyName { get; set; }
+
+        public string? isDirectBeneficiary { get; set; }
+
+        public string? Designation { get; set; }
+        // end 
 
 
-    }
+    }
 }

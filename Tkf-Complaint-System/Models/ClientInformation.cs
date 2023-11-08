@@ -30,6 +30,12 @@ using System.ComponentModel.DataAnnotations;
 
         public ICollection<Feedback>? Feedbacks { get; set; }
 
-    
+        // adding 
+        public string isDirectBeneficiary { get; set; }
+
+        public string Designation { get; set; }
+
+        
+
 
 }
