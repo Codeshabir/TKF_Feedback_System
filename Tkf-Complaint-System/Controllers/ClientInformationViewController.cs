@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using Tkf_Complaint_System.Data;
 using Tkf_Complaint_System.Models;
 using static Tkf_Complaint_System.Controllers.ClientInformationController;
@@ -56,6 +57,12 @@ namespace Tkf_Complaint_System.Controllers
 
         public IActionResult UpdateFeedback(FeedbackUpdateViewModel updateModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(new { message = "Validation failed", errors = errors });
+            }
+
             try
             {
                 var id = updateModel.id;
@@ -69,7 +76,7 @@ namespace Tkf_Complaint_System.Controllers
                 fdback.StatusId = updateModel.Action;
                 fdback.FeedbackByAdmin = updateModel.Remarks;
                 _context.SaveChanges();
-                return Json(new {message = "Success"});
+                return View();
             }
             catch (Exception ex)
             {
@@ -78,10 +85,18 @@ namespace Tkf_Complaint_System.Controllers
 
 
         }
+
+
         public class FeedbackUpdateViewModel
         {
+            
             public int id { get; set; }
+
+            [Required(ErrorMessage = "Action is required.")]
+            [Range(1, int.MaxValue, ErrorMessage = "Action must be a positive integer.")]
             public int Action { get; set; }
+
+            [Required(ErrorMessage = "Remarks is required.")]
             public string Remarks { get; set; }
         }
 
