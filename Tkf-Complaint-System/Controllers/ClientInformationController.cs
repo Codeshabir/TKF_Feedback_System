@@ -90,7 +90,9 @@ namespace Tkf_Complaint_System.Controllers
                     EmailID = feedbackModel.EmailID,
                     CallBackMethod = feedbackModel.CallBackMethod,
                     OtherType = feedbackModel.OtherType,
-                    OthersCompanyName = feedbackModel.OthersCompanyName
+                    OthersCompanyName = feedbackModel.OthersCompanyName,
+                    Designation = "",
+                    isDirectBeneficiary = ""
                 };
 
             }
@@ -110,7 +112,9 @@ namespace Tkf_Complaint_System.Controllers
                     CallBackMethod = feedbackModel.CallBackMethod,
                     OtherType = "",
                     OthersCompanyName = "",
-                    Designation = clientInformation.Designation
+                    Designation = feedbackModel.Designation,
+                    isDirectBeneficiary = ""
+
                 };
             }
 
@@ -129,7 +133,8 @@ namespace Tkf_Complaint_System.Controllers
                     CallBackMethod = feedbackModel.CallBackMethod,
                     OtherType = "",
                     OthersCompanyName = "",
-                    isDirectBeneficiary = clientInformation.isDirectBeneficiary
+                    Designation = "",
+                    isDirectBeneficiary = feedbackModel.IsDirectBeneficiary
 
                 };
             }
@@ -160,7 +165,7 @@ namespace Tkf_Complaint_System.Controllers
 
             var project = new Project_tbl
             {
-                Id = newId,
+               
                 ProjectName = feedbackModel.ProjectName,
                 ProjectCode = "ABC-CODE",
                 ProjectDistrict = feedbackModel.ProjectDistrict,
@@ -175,9 +180,11 @@ namespace Tkf_Complaint_System.Controllers
 
             };
 
+
+
             var feedback = new Feedback
             {
-                ComplaintDate = DateTime.UtcNow,
+                ComplaintDate = DateTime.Now,
                 Type = feedbackModel.FeedbackType,
                 SubType = feedbackModel.FeedbackSubtype,
                 ComplaintFeedbackRemarks = feedbackModel.ComplaintFeedbackRemarks,

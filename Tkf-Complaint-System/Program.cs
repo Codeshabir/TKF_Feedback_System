@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<Tkf_Complaint_System_Context>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Tkf_Complaint_System_Context")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Tkf_Complaint_System_Context")));
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

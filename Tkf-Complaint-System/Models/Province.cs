@@ -8,14 +8,15 @@ namespace Tkf_Complaint_System.Models
 {
     public class Province
     {
-    [Key]
-    public int ProvinceId { get; set; }
+        [Key]
+        public int ProvinceId { get; set; }
 
-    [Required]
-    public string ProvinceName { get; set; }
+        [Required]
+        public string ProvinceName { get; set; }
 
-    public ICollection<District> Districts { get; set; }
+        public ICollection<District> Districts { get; set; }
     }
+
 
     public class District
     {

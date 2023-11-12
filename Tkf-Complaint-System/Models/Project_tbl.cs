@@ -6,6 +6,7 @@ namespace Tkf_Complaint_System.Models
 {
     public class Project_tbl
     {
+        [Key]
         public int Id { get; set; }
 
         //[Required]

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int ClientId { get; set; }
-        public DateTime ComplaintDate { get; set; }
+        public DateTimeOffset ComplaintDate { get; set; }
         public string Type { get; set; }
         public string SubType { get; set; }
         public string ComplaintFeedbackRemarks { get; set; }
