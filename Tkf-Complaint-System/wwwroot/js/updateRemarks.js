@@ -14,6 +14,7 @@ $(document).ready(function () {
     });
 
     $("#updateFeedbackButton").click(function (event) {
+        debugger
         var statusId = selectedStatusId;
         var id = $("#recordIdInput").val();
         var remarks = $("#FeedbackByAdmin").val();
