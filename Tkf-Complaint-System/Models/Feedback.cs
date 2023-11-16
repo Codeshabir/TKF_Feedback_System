@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -6,6 +7,7 @@ namespace Tkf_Complaint_System.Models
 {
     public class Feedback
     {
+        [Key]
         public int Id { get; set; }
 
         //[Required]
@@ -14,7 +16,7 @@ namespace Tkf_Complaint_System.Models
         public ClientInformation? ClientInformation { get; set; }
 
         //[Required]
-        public DateTime ComplaintDate { get; set; } 
+        public DateTimeOffset ComplaintDate { get; set; } // Use DateTimeOffset for timezone information
 
         //[Required]
         public string Type { get; set; }
@@ -39,7 +41,7 @@ namespace Tkf_Complaint_System.Models
         [JsonIgnore]
         public DateTime FeedbackResponseDate { get; set; }
 
-        public int StatusId { get; set; } 
+        public int StatusId { get; set; }
 
         // Navigation property for the Status relationship
         [ForeignKey("StatusId")]

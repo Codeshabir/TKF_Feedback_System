@@ -57,11 +57,11 @@ namespace Tkf_Complaint_System.Controllers
 
         public IActionResult UpdateFeedback(FeedbackUpdateViewModel updateModel)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-                return BadRequest(new { message = "Validation failed", errors = errors });
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+            //    return BadRequest(new { message = "Validation failed", errors = errors });
+            //}
 
             try
             {
