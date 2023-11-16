@@ -114,7 +114,6 @@ namespace Tkf_Complaint_System.Controllers
                     OthersCompanyName = "",
                     Designation = feedbackModel.Designation,
                     isDirectBeneficiary = ""
-
                 };
             }
 
@@ -167,12 +166,12 @@ namespace Tkf_Complaint_System.Controllers
             {
                
                 ProjectName = feedbackModel.ProjectName,
-                ProjectCode = "ABC-CODE",
+                ProjectCode = "",
                 ProjectDistrict = feedbackModel.ProjectDistrict,
                 ProjectProvince = feedbackModel.Province,
-                ProjectType = "abc",
+                ProjectType = "",
                 ProjectUC = feedbackModel.ProjectUC,
-                Donor = "Donor",
+                Donor = "",
                 CityName = feedbackModel.ProjectCity,
                 VillageName = feedbackModel.ProjectVillage
 
