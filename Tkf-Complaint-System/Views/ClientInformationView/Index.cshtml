@@ -16,9 +16,46 @@
 *@
         <!--<hr class="my-5" />-->
         <!--Hoverable Table rows-->
+     
         <div class="card">
             <h5 class="card-header">Client Information</h5>
             <div class="table-responsive text-nowrap">
+                <div class="card-body">
+                 
+                        <div class="btn-group">
+                            <button type="button"
+                                    class="btn btn-outline-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Status
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="javascript:void(0);">All</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Received</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">InProgress</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Rejected</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Responded</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Closed</a></li>
+
+                            </ul>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button"
+                                    class="btn btn-outline-secondary dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Client Type
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="javascript:void(0);">Beneficiary</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">StaffMember</a></li>
+                                <li><a class="dropdown-item" href="javascript:void(0);">Other</a></li>
+
+                            </ul>
+                        </div>
+
+                </div>
                 <table id="example2" class="table table-bordered table-hover">
                    
                     <thead>
@@ -44,8 +81,35 @@
                                 <td>@item.AgeGroup</td>
                                 <td>@item.Nationality</td>
                                 <td>@item.CNIC</td>
-                         
-                                <td><span class="badge bg-label-warning me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Received")
+                                {
+                                    <td><span class="badge bg-label-info me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+
+                                }
+
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "InProgress")
+                                {
+                                    <td><span class="badge bg-label-success me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+
+                                }
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Rejected")
+                                {
+                                    <td><span class="badge bg-label-danger me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+
+                                }
+
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Responded")
+                                {
+                                    <td><span class="badge bg-label-primary me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+
+                                }
+
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Closed")
+                                {
+                                    <td><span class="badge bg-label-warning me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
+
+                                }
+
 
                                 <td>
                                     <div class="dropdown">
@@ -53,7 +117,7 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="@Url.Action("Detail","ClientInformationView", new{ClientId = @item.Id })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("Detail","ClientInformationView", new{ClientInfoId = @item.Id })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                             <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
                                     </div>

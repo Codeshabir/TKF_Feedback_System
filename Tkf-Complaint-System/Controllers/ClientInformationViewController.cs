@@ -54,7 +54,7 @@ namespace Tkf_Complaint_System.Controllers
         //    return View(clientInformationDTOList);
         //}
 
-
+        [HttpPut]
         public IActionResult UpdateFeedback(FeedbackUpdateViewModel updateModel)
         {
             //if (!ModelState.IsValid)
@@ -65,8 +65,8 @@ namespace Tkf_Complaint_System.Controllers
 
             try
             {
-                var id = updateModel.id;
-                var fdback = _context.feedbacks.FirstOrDefault(f => f.ClientId == id);
+                var Client = updateModel.id;
+                var fdback = _context.feedbacks.FirstOrDefault(f => f.ClientId == Client);
 
                 if (fdback == null)
                 {
@@ -151,14 +151,14 @@ namespace Tkf_Complaint_System.Controllers
         }
 
 
-        public IActionResult Detail(int ClientId)
+        public IActionResult Detail(int ClientInfoId)
         {
             try
             {
                 var clientInfo = _context.clientInformation
                     .Include(c => c.Feedbacks)
                     .ThenInclude(f => f.Project)
-                    .FirstOrDefault(c => c.Id == ClientId);
+                    .FirstOrDefault(c => c.Id == ClientInfoId);
                 if (clientInfo != null)
                 {
                     return View(clientInfo);
