@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Tkf_Complaint_System.Data;
 using Tkf_Complaint_System.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static Tkf_Complaint_System.Controllers.ClientInformationController;
 
 namespace Tkf_Complaint_System.Controllers
@@ -100,7 +101,7 @@ namespace Tkf_Complaint_System.Controllers
             public string Remarks { get; set; }
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string clientTypeName, string statusTypeName)
         {
             var clientInformationDTOList = await _context.clientInformation
                 .Include(c => c.Feedbacks)
@@ -147,9 +148,28 @@ namespace Tkf_Complaint_System.Controllers
                 })
                 .ToListAsync();
 
+            // Apply filters based on the parameters
+            if (!string.IsNullOrEmpty(statusTypeName) && statusTypeName.ToLower() != "All")
+            {
+                clientInformationDTOList = clientInformationDTOList.Where(ci => ci.Feedbacks.Any(f => f.StatusName == statusTypeName)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(clientTypeName) && clientTypeName.ToLower() != "All")
+            {
+                clientInformationDTOList = clientInformationDTOList.Where(ci => ci.ClientType == clientTypeName).ToList();
+            }
+
+
+            // Populate dropdown data
+            var status = await _context.feedbacks.Select(f => f.Status.StatusName).Distinct().ToListAsync();
+            var clientTypes = await _context.clientInformation.Select(ci => ci.ClientType).Distinct().ToListAsync();
+
+            ViewBag.Status = status;
+            ViewBag.ClientType = clientTypes;
+            ViewBag.SelectedClientType = clientTypeName; // Pass the selected client type back to the view
+
             return View(clientInformationDTOList);
         }
-
 
         public IActionResult Detail(int ClientInfoId)
         {

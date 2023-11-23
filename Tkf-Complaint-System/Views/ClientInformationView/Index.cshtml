@@ -22,7 +22,7 @@
             <div class="table-responsive text-nowrap">
                 <div class="card-body">
                  
-                        <div class="btn-group">
+                        <div class="btn-group" id="statusDropdown"> 
                             <button type="button"
                                     class="btn btn-outline-primary dropdown-toggle"
                                     data-bs-toggle="dropdown"
@@ -30,17 +30,18 @@
                                 Status
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="javascript:void(0);">All</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Received</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">InProgress</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Rejected</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Responded</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Closed</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView")">All</a></li>
+                            @foreach (var item in ViewBag.Status)
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView", new { StatusTypeName = item, clientTypeName = ViewBag.SelectedClientType })">@item</a></li>
+
+                            }
+                               
 
                             </ul>
                         </div>
 
-                        <div class="btn-group">
+                        <div class="btn-group" id="clientTypeDropdown">
                             <button type="button"
                                     class="btn btn-outline-secondary dropdown-toggle"
                                     data-bs-toggle="dropdown"
@@ -48,13 +49,18 @@
                                 Client Type
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="javascript:void(0);">Beneficiary</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">StaffMember</a></li>
-                                <li><a class="dropdown-item" href="javascript:void(0);">Other</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView")">All</a></li>
+
+                                @foreach (var item in ViewBag.ClientType)
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Index","ClientInformationView", new{clientTypeName = item})">@item</a></li>
+
+                            }
+                                
 
                             </ul>
                         </div>
-
+                       
                 </div>
                 <table id="example2" class="table table-bordered table-hover">
                    
@@ -81,30 +87,30 @@
                                 <td>@item.AgeGroup</td>
                                 <td>@item.Nationality</td>
                                 <td>@item.CNIC</td>
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Received")
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 1)
                                 {
                                     <td><span class="badge bg-label-info me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
 
                                 }
 
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "InProgress")
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 2)
                                 {
                                     <td><span class="badge bg-label-success me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
 
                                 }
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Rejected")
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 3)
                                 {
                                     <td><span class="badge bg-label-danger me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
 
                                 }
 
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Responded")
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 4)
                                 {
                                     <td><span class="badge bg-label-primary me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
 
                                 }
 
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusName == "Closed")
+                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 5)
                                 {
                                     <td><span class="badge bg-label-warning me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
 
