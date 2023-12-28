@@ -1,70 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Tkf_Complaint_System.Areas.Identity.Data;
 using Tkf_Complaint_System.Data;
 using Tkf_Complaint_System.Models;
 
 namespace Tkf_Complaint_System.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Tkf_Complaint_System_Context _context;
+        private readonly UserManager<Tkf_Complaint_SystemUser> _userManager;
 
-
-        public HomeController(ILogger<HomeController> logger, Tkf_Complaint_System_Context context)
+        public HomeController(ILogger<HomeController> logger, Tkf_Complaint_System_Context context, UserManager<Tkf_Complaint_SystemUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
-
-
-        //public IActionResult Index()
-        //{
-        //    var projectTotals = _context.feedbacks
-        //        .GroupBy(f => f.Project.ProjectName) // Group by ProjectName
-        //        .Select(g => new
-        //        {
-        //            ProjectName = g.Key,
-        //            Count = g.Count()
-        //        })
-        //        .ToDictionary(x => x.ProjectName, x => x.Count);
-        //    ViewBag.ProjectTotals = projectTotals;
-
-        //    var statusTotals = _context.feedbacks
-        //        .Include(f => f.Status) // Include the associated Status
-        //        .GroupBy(f => f.Status.StatusName) // Group by StatusName
-        //        .Select(g => new
-        //        {
-        //            StatusName = g.Key,
-        //            Count = g.Count()
-        //        })
-        //        .ToDictionary(x => x.StatusName, x => x.Count);
-        //    ViewBag.StatusTotals = statusTotals;
-
-
-        //    var complaintTypeTotals = _context.feedbacks
-        //        .GroupBy(f => f.Type) // Group by ClientType
-        //        .Select(g => new
-        //        {
-        //            ComplaintType = g.Key,
-        //            Count = g.Count()
-        //        })
-        //        .ToDictionary(x => x.ComplaintType, x => x.Count);
-
-        //    ViewBag.ComplaintTypeTotals = complaintTypeTotals;
-
-        //    ViewBag.ComplaintTypeTotalsJson = JsonConvert.SerializeObject(complaintTypeTotals);
-
-
-
-
-        //    return View();
-
-        //}
-
-
 
         public IActionResult Index(string? projectName)
         {
@@ -134,8 +92,6 @@ namespace Tkf_Complaint_System.Controllers
 
             }
 
-            // ViewBag.ComplaintTypeTotalsJson = JsonConvert.SerializeObject(complaintTypeTotals);
-
             var aggregatedData = _context.feedbacks
                   .GroupBy(f => new
                   {
@@ -162,10 +118,6 @@ namespace Tkf_Complaint_System.Controllers
                       TotalCount = aggregated.Sum(item => item.Count)
                   })
                   .ToList();
-
-                        //ViewBag.ComplaintData = JsonConvert.SerializeObject(aggregatedData);
-
-
             return View();
         }
 

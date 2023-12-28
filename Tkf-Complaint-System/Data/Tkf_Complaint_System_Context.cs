@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Tkf_Complaint_System.Areas.Identity.Data;
 using Tkf_Complaint_System.Models;
 
 namespace Tkf_Complaint_System.Data
 {
-    public class Tkf_Complaint_System_Context : DbContext
+    public class Tkf_Complaint_System_Context : IdentityDbContext<Tkf_Complaint_SystemUser>
     {
         public Tkf_Complaint_System_Context(DbContextOptions<Tkf_Complaint_System_Context> options) : base(options)
         {

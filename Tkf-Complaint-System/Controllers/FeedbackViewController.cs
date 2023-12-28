@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tkf_Complaint_System.Data;
 
 namespace Tkf_Complaint_System.Controllers
 {
+    [Authorize]
     public class FeedbackViewController : Controller
     {
         private readonly Tkf_Complaint_System_Context _context;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Tkf_Complaint_System.Data;
@@ -8,6 +9,7 @@ using static Tkf_Complaint_System.Controllers.ClientInformationController;
 
 namespace Tkf_Complaint_System.Controllers
 {
+    [Authorize]
     public class ClientInformationViewController : Controller
     {
         private readonly Tkf_Complaint_System_Context _context;
