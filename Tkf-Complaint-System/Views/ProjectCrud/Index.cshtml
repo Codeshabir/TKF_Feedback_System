@@ -1,9 +1,78 @@
-﻿﻿@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    @*   <!-- Instruction Modal -->
+    <div id="instructionModal" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('instructionModal').style.display='none'">&times;</span>
+    <h2>Task 1: Change Brand Logo</h2>
+    <p>
+    To complete Task 1, go to Views > Home > Index. In the `Index.cshtml` file, find the keyword for the brand logo and upload the necessary image.
+    </p>
+    <button onclick="handleLogoUpload();">Close</button>
+    </div>
+    </div>
 
+    <!-- Congrats Modal -->
+    <div id="congratsModal" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('congratsModal').style.display='none'">&times;</span>
+    <h2>Congratulations!</h2>
+    <p>You have successfully completed Task 1. You earned 50 marks!</p>
+    <button onclick="document.getElementById('congratsModal').style.display='none'">Close</button>
+    </div>
+    </div>
+
+    *@
+
+
+
+    <!-- Your existing code -->
+    <!-- Task 1 Instruction Modal -->
+    @*<div id="instructionModal" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('instructionModal').style.display='none'">&times;</span>
+    <h2>Task 1: Change Brand Logo</h2>
+    <p>
+    To complete Task 1, go to Views > Home > Index. In the `Index.cshtml` file, find the keyword for the brand logo and upload the necessary image.
+    </p>
+    <button onclick="handleLogoUpload();">Close</button>
+    </div>
+    </div>
+
+    <!-- Congrats Modal for Task 1 -->
+    <div id="congratsModalTask1" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('congratsModalTask1').style.display='none'">&times;</span>
+    <h2>Congratulations!</h2>
+    <p>You have successfully completed Task 1. You earned 50 marks!</p>
+    <button onclick="document.getElementById('congratsModalTask1').style.display='none'; checkTask2();">Close</button>
+    </div>
+    </div>
+
+    <!-- Task 2 Instruction Modal -->
+    <div id="task2InstructionModal" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('task2InstructionModal').style.display='none'">&times;</span>
+    <h2>Task 2: Redirect View Complaint Button</h2>
+    <p>
+    To complete Task 2, go to the file where the "View Complaint" button is defined. Update the URL to redirect to the Client Information tab and display the list of complaints.
+    </p>
+    <button onclick="handleRedirectTask();">Close</button>
+    </div>
+    </div>
+
+    <!-- Congrats Modal for Task 2 -->
+    <div id="congratsModalTask2" class="modal">
+    <div class="modal-content">
+    <span class="close" onclick="document.getElementById('congratsModalTask2').style.display='none'">&times;</span>
+    <h2>Congratulations!</h2>
+    <p>You have successfully completed Task 2. You earned 50 marks!</p>
+    <button onclick="document.getElementById('congratsModalTask2').style.display='none'">Close</button>
+    </div>
+    </div>
+    *@
     <!-- Your existing logo HTML -->
     <div class="app-brand demo">
         <a href="/" class="app-brand-link">
@@ -32,48 +101,26 @@
             </a>
         </li>
 
+
+
         <li class="menu-item">
             <a href="@Url.Action("Index","ClientInformationView")" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Client Information</div>
             </a>
         </li>
-
+        @*     <li class="menu-item">
+        <a href="project-table.html" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-table"></i>
+        <div data-i18n="Tables">Projects</div>
+        </a>
+        </li>*@
         <li class="menu-item">
-            <a href="@Url.Action("Index","District")" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Project Settings</div>
+            <a href="@Url.Action("Index","FeedbackView")" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Feedback </div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="@Url.Action("Index","District")" class="menu-link">
-                        <div data-i18n="Account">Districts</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="@Url.Action("Index","City")" class="menu-link">
-                        <div data-i18n="Notifications">City</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="@Url.Action("Index","UCs")" class="menu-link">
-                        <div data-i18n="Notifications">UC</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="@Url.Action("Index","Village")" class="menu-link">
-                        <div data-i18n="Tables">Village </div>
-                    </a>
-                </li>
-                
-                <li class="menu-item">
-                    <a href="@Url.Action("Index","Project")" class="menu-link">
-                        <div data-i18n="Tables">Project </div>
-                    </a>
-                </li>
-            </ul>
         </li>
-    
 
     </ul>
 </aside>
@@ -140,8 +187,8 @@
                                 <h3 class="card-title mb-2">@ViewBag.StatusTotals["Received"]</h3>
                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
                             }
-
-
+                       
+                           
                         </div>
                     </div>
                 </div>
@@ -268,7 +315,7 @@
 
                             @if (ViewBag.StatusTotals.ContainsKey("Rejected"))
                             {
-
+                             
                                 <h3 class="card-title text-nowrap mb-2">@ViewBag.StatusTotals["Rejected"]</h3>
                                 <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small>
                             }
@@ -319,7 +366,7 @@
                                     <div class="card-title">
 
 
-
+                                       
 
 
                                         <h5 class="text-nowrap mb-2">Closed</h5>
@@ -350,20 +397,20 @@
                     <div class="card-title mb-0">
                         <h5 class="m-0 me-2">Complaint Type</h5>
                     </div>
-                    @* <div class="dropdown">
-                    <button class="btn p-0"
-                    type="button"
-                    id="orederStatistics"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                    <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                    </div>
+                   @* <div class="dropdown">
+                        <button class="btn p-0"
+                                type="button"
+                                id="orederStatistics"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                            <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
                     </div>*@
                 </div>
                 <div class="card-body">
@@ -414,11 +461,11 @@
                                 Feedback
                             </button>
                         </li>
-                        @*    <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab">Expenses</button>
+                    @*    <li class="nav-item">
+                            <button type="button" class="nav-link" role="tab">Expenses</button>
                         </li>
                         <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab">Profit</button>
+                            <button type="button" class="nav-link" role="tab">Profit</button>
                         </li>*@
                     </ul>
                 </div>
@@ -446,8 +493,8 @@
                                     <div id="expensesOfWeek"></div>
                                 </div>
                                 <div>
-                                    @*                                    <p class="mb-n1 mt-1">Expenses This Week</p>
-                                    *@                                    <small class="text-muted">39 less than last week</small>
+@*                                    <p class="mb-n1 mt-1">Expenses This Week</p>
+*@                                    <small class="text-muted">39 less than last week</small>
                                 </div>
                             </div>
                         </div>
@@ -517,8 +564,8 @@
     }
 
     @complaintTypes
-
-        var complaintTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ComplaintTypes));
+   
+    var complaintTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ComplaintTypes));
 
     function selectProject(selectedProject) {
         console.log("Selected Project: " + selectedProject);
@@ -527,7 +574,7 @@
         $.ajax({
             url: "/Home/SelectedProjGraph/",
             type: "GET",
-            data: { projectName: projectName },
+            data: { projectName: projectName }, 
             success: function () {
                 debugger;
                 alert("Feedback updated successfully.");
@@ -535,7 +582,7 @@
 
 
                 initializeComplaintChart();
-
+         
                 //cation.reload(); // Reload the page
             },
             error: function (xhr, status, error) {
@@ -546,87 +593,11 @@
 
 
 </script>
+<!-- Add this at the end of your HTML body tag -->
+<!-- Add this at the end of your HTML body tag -->
 
 
 
 
 
 <script src="~/js/chartvalues.js"></script>
-
-
-
-@*<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-*@    @*   <!-- Instruction Modal -->
-    <div id="instructionModal" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('instructionModal').style.display='none'">&times;</span>
-    <h2>Task 1: Change Brand Logo</h2>
-    <p>
-    To complete Task 1, go to Views > Home > Index. In the `Index.cshtml` file, find the keyword for the brand logo and upload the necessary image.
-    </p>
-    <button onclick="handleLogoUpload();">Close</button>
-    </div>
-    </div>
-
-    <!-- Congrats Modal -->
-    <div id="congratsModal" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('congratsModal').style.display='none'">&times;</span>
-    <h2>Congratulations!</h2>
-    <p>You have successfully completed Task 1. You earned 50 marks!</p>
-    <button onclick="document.getElementById('congratsModal').style.display='none'">Close</button>
-    </div>
-    </div>
-
-    *@
-
-
-
-    <!-- Your existing code -->
-    <!-- Task 1 Instruction Modal -->
-    @*<div id="instructionModal" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('instructionModal').style.display='none'">&times;</span>
-    <h2>Task 1: Change Brand Logo</h2>
-    <p>
-    To complete Task 1, go to Views > Home > Index. In the `Index.cshtml` file, find the keyword for the brand logo and upload the necessary image.
-    </p>
-    <button onclick="handleLogoUpload();">Close</button>
-    </div>
-    </div>
-
-    <!-- Congrats Modal for Task 1 -->
-    <div id="congratsModalTask1" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('congratsModalTask1').style.display='none'">&times;</span>
-    <h2>Congratulations!</h2>
-    <p>You have successfully completed Task 1. You earned 50 marks!</p>
-    <button onclick="document.getElementById('congratsModalTask1').style.display='none'; checkTask2();">Close</button>
-    </div>
-    </div>
-
-    <!-- Task 2 Instruction Modal -->
-    <div id="task2InstructionModal" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('task2InstructionModal').style.display='none'">&times;</span>
-    <h2>Task 2: Redirect View Complaint Button</h2>
-    <p>
-    To complete Task 2, go to the file where the "View Complaint" button is defined. Update the URL to redirect to the Client Information tab and display the list of complaints.
-    </p>
-    <button onclick="handleRedirectTask();">Close</button>
-    </div>
-    </div>
-
-    <!-- Congrats Modal for Task 2 -->
-    <div id="congratsModalTask2" class="modal">
-    <div class="modal-content">
-    <span class="close" onclick="document.getElementById('congratsModalTask2').style.display='none'">&times;</span>
-    <h2>Congratulations!</h2>
-    <p>You have successfully completed Task 2. You earned 50 marks!</p>
-    <button onclick="document.getElementById('congratsModalTask2').style.display='none'">Close</button>
-    </div>
-    </div>
-    *@
-    <!-- Your existing logo HTML -->
-@*   
-</aside>*@

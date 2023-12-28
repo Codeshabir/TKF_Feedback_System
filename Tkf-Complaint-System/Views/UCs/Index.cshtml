@@ -1,6 +1,8 @@
-﻿@model List<ClientInformationDTO>
+﻿@model List<UC>
 <!-- jQuery -->
-
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <head>
 
@@ -83,114 +85,39 @@
     </ul>
 </aside>
 
-
 <div class="content-wrapper">
     <!-- Content -->
 
     <div class="container-xxl flex-grow-1 container-p-y">
-@*        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
-*@
-        <!--<hr class="my-5" />-->
-        <!--Hoverable Table rows-->
-     
+
+
         <div class="card">
-            <h5 class="card-header">Client Information</h5>
+            <h5 class="card-header">UC</h5>
             <div class="table-responsive text-nowrap">
-                <div class="card-body">
-                 
-                        <div class="btn-group" id="statusDropdown"> 
-                            <button type="button"
-                                    class="btn btn-outline-primary dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                Status
-                            </button>
-                            <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView")">All</a></li>
-                            @foreach (var item in ViewBag.Status)
-                            {
-                                <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView", new { StatusTypeName = item, clientTypeName = ViewBag.SelectedClientType })">@item</a></li>
+                <div class="card-body d-flex justify-content-between align-items-center">
 
-                            }
-                               
+                    <a type="button" href="@Url.Action("Create","UCs")" class="btn btn-outline-primary ml-auto">
+                        Add UC
+                    </a>
 
-                            </ul>
-                        </div>
-
-                        <div class="btn-group" id="clientTypeDropdown">
-                            <button type="button"
-                                    class="btn btn-outline-secondary dropdown-toggle"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                Client Type
-                            </button>
-                            <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="@Url.Action("Index", "ClientInformationView")">All</a></li>
-
-                                @foreach (var item in ViewBag.ClientType)
-                            {
-                                <li><a class="dropdown-item" href="@Url.Action("Index","ClientInformationView", new{clientTypeName = item})">@item</a></li>
-
-                            }
-                                
-
-                            </ul>
-                        </div>
-                       
                 </div>
                 <table id="example2" class="table table-bordered table-hover">
-                   
+
                     <thead>
                         <tr>
                             <!--<th>Project</th>-->
-                            <th>Client Type</th>
-                            <th>Gender</th>
-                            <th>Name</th>
-                            <th>Age Group</th>
-                            <th>Nationality</th>
-                            <th>CNIC</th>
-                           <th>Status.</th>
-                            <th>Action</th>
+                            <th>UC Id</th>
+                            <th>UC Name.</th>
+                            <th>Status</th>
+
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.ClientType</td>
-                                <td>@item.Gender</td>
-                                <td>@item.Name</td>
-                                <td>@item.AgeGroup</td>
-                                <td>@item.Nationality</td>
-                                <td>@item.CNIC</td>
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 1)
-                                {
-                                    <td><span class="badge bg-label-info me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-                                }
-
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 2)
-                                {
-                                    <td><span class="badge bg-label-success me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-                                }
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 3)
-                                {
-                                    <td><span class="badge bg-label-danger me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-                                }
-
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 4)
-                                {
-                                    <td><span class="badge bg-label-primary me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-                                }
-
-                                @if (item.Feedbacks.FirstOrDefault()?.StatusId == 5)
-                                {
-                                    <td><span class="badge bg-label-warning me-1">@item.Feedbacks.FirstOrDefault()?.StatusName</span></td>
-
-                                }
+                                <td>@item.UCId</td>
+                                <td>@item.UCName</td>
 
 
                                 <td>
@@ -199,16 +126,16 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="@Url.Action("Detail","ClientInformationView", new{ClientInfoId = @item.Id })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                                            <a class="dropdown-item" href="@Url.Action("Detail","UCs", new{id = @item.UCId })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete","UCs", new{id = @item.UCId })"><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
-                            
+
                             </tr>
                         }
-                      
-                    
+
+
                     </tbody>
                 </table>
             </div>
@@ -218,7 +145,7 @@
         <hr class="my-5" />
 
         <!-- / Content -->
-   
+
 
         <div class="content-backdrop fade"></div>
     </div>
