@@ -1,4 +1,4 @@
-﻿@model List<UC>
+﻿@model IEnumerable<Tkf_Complaint_System.Models.DirectoryViewModel.Department>
 <!-- jQuery -->
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -32,7 +32,7 @@
                     <thead>
                         <tr>
                             <!--<th>Project</th>-->
-                            <th>Type</th>
+                            <th>ID</th>
                             <th>Department Name.</th>
                             <th>Website</th>
                             <th>Phone</th>
@@ -42,31 +42,31 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                       @* @foreach (var item in Model)
-                        {*@
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>@item.DepartmentId</td>
+                                <td>@item.DepartmentName</td>
+                                <td>@item.OfficialWebsite</td>
+                                <td>@item.OfficialPhone</td>
+                                <td>@item.OfficialEmail</td>
 
 
                                 <td>
-                                  @*  <div class="dropdown">
+                                    <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="@Url.Action("Detail","UCs", new{id = @item.UCId })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                            <a class="dropdown-item" href="@Url.Action("Delete","UCs", new{id = @item.UCId })"><i class="bx bx-trash me-1"></i> Delete</a>
+                                            <a class="dropdown-item" href="@Url.Action("Detail","Department", new{id = @item.DepartmentId })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete","Department", new{id = @item.DepartmentId })"><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
-                                    </div>*@
+                                    </div>
                                 </td>
 
                             </tr>
-                      @*  }
-*@
+                        }
+
 
                     </tbody>
                 </table>

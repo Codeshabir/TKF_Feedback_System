@@ -1,7 +1,9 @@
-﻿@model Tkf_Complaint_System.Models.UC
-﻿@{
+﻿@model Tkf_Complaint_System.Models.DirectoryViewModel.Department
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
@@ -9,56 +11,49 @@
 
             <h2>Create Directory</h2>
 
-            <form asp-action="Create">
+            <form asp-action="Create" asp-controller="Directory" method="post">
                 <div class="form-group">
-                    <label asp-for="UCName">Department Name</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div>
-               
-                <div class="form-group">
-                    <label asp-for="UCName">Official Email</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div> 
-                <div class="form-group">
-                    <label asp-for="UCName">Official Website</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div>
-                  <div class="form-group">
-                    <label asp-for="UCName">Official Phone</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
+                    <label asp-for="DepartmentName">Department Name</label>
+                    <input asp-for="DepartmentName" class="form-control" />
+                    <span asp-validation-for="DepartmentName" class="text-danger"></span>
                 </div>
 
+                <div class="form-group">
+                    <label asp-for="OfficialEmail">Official Email</label>
+                    <input asp-for="OfficialEmail" class="form-control" />
+                    <span asp-validation-for="OfficialEmail" class="text-danger"></span>
+                </div>
 
                 <div class="form-group">
-                    <label asp-for="CityId"> Select Department</label>
-@*                    @Html.DropDownList("", ViewBag.ProvinceList as SelectList, "Select a Department", new { @class = "form-control" })
-*@
+                    <label asp-for="OfficialWebsite">Official Website</label>
+                    <input asp-for="OfficialWebsite" class="form-control" />
+                    <span asp-validation-for="OfficialWebsite" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="OfficialPhone">Official Phone</label>
+                    <input asp-for="OfficialPhone" class="form-control" />
+                    <span asp-validation-for="OfficialPhone" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DepartmentId">Select Department</label>
+                    <select asp-for="DepartmentId" class="form-control">
+                        <option value=""> Select a Department</option>
+                        @foreach (var item in ViewBag.Departments)
+                        {
+                            <option value="@item.DepartmentId">@item.DepartmentName</option>    
+                        }
+                    </select>
+                    
+                </div>
+
                 <h3>Create Person</h3>
-                <div class="form-group">
-                    <label asp-for="UCName">Person Name</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
+                <button id="addPerson" type="button" class="btn btn-success">Add Person</button>
+
+                <div id="personsContainer">
                 </div>
-                <div class="form-group">
-                    <label asp-for="UCName">Designation</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UCName">Person's Phone</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UCName">Address</label>
-                    <input asp-for="UCName" class="form-control" />
-                    <span asp-validation-for="UCName" class="text-danger"></span>
-                </div>
+
                 <br />
                 <button type="submit" class="btn btn-primary">Create Directory</button>
             </form>
@@ -67,3 +62,49 @@
         </div>
     </div>
 </div>
+
+<!-- Add this script at the end of your HTML document -->
+<script>
+    $(document).ready(function () {
+        // Counter to keep track of added persons
+        var personCount = 0;
+
+        // Function to add person input fields
+        function addPerson() {
+            var personHtml = `
+                        <div class="person-group">
+                            <h3>Person ${personCount + 1}</h3>
+                            <div class="form-group">
+                                <label asp-for="Persons[${personCount}].PersonName">Person Name</label>
+                                <input name="Persons[${personCount}].PersonName" class="form-control" />
+                                <span asp-validation-for="Persons[${personCount}].PersonName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Persons[${personCount}].Designation">Designation</label>
+                                <input name="Persons[${personCount}].Designation" class="form-control" />
+                                <span asp-validation-for="Persons[${personCount}].Designation" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Persons[${personCount}].Phone">Person's Phone</label>
+                                <input name="Persons[${personCount}].Phone" class="form-control" />
+                                <span asp-validation-for="Persons[${personCount}].Phone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Persons[${personCount}].Address">Address</label>
+                                <input name="Persons[${personCount}].Address" class="form-control" />
+                                <span asp-validation-for="Persons[${personCount}].Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                    `;
+
+            // Append the person fields to the container
+            $("#personsContainer").append(personHtml);
+            personCount++;
+        }
+
+        // Add click event for the "Add Person" button
+        $("#addPerson").click(function () {
+            addPerson();
+        });
+    });
+</script>
