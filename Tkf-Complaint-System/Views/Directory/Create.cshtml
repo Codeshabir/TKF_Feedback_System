@@ -1,0 +1,69 @@
+﻿@model Tkf_Complaint_System.Models.UC
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-7 mb-4 order-0">
+
+            <h2>Create Directory</h2>
+
+            <form asp-action="Create">
+                <div class="form-group">
+                    <label asp-for="UCName">Department Name</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group">
+                    <label asp-for="UCName">Official Email</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div> 
+                <div class="form-group">
+                    <label asp-for="UCName">Official Website</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+                  <div class="form-group">
+                    <label asp-for="UCName">Official Phone</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="CityId"> Select Department</label>
+@*                    @Html.DropDownList("", ViewBag.ProvinceList as SelectList, "Select a Department", new { @class = "form-control" })
+*@
+                </div>
+                <h3>Create Person</h3>
+                <div class="form-group">
+                    <label asp-for="UCName">Person Name</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UCName">Designation</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UCName">Person's Phone</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UCName">Address</label>
+                    <input asp-for="UCName" class="form-control" />
+                    <span asp-validation-for="UCName" class="text-danger"></span>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Create Directory</button>
+            </form>
+        </div>
+        <div class="col-lg-5 mb-4 order-0">
+        </div>
+    </div>
+</div>

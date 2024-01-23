@@ -26,8 +26,6 @@ namespace Tkf_Complaint_System.Controllers
 
         public IActionResult Index(string? projectName)
         {
-
-
             // Project
             var projectTotals = _context.feedbacks
                 .GroupBy(f => f.Project.ProjectName)
@@ -120,7 +118,6 @@ namespace Tkf_Complaint_System.Controllers
                   .ToList();
             return View();
         }
-
 
         public IActionResult SelectedProjGraph(string projectName)
         {

@@ -10,6 +10,7 @@
 
 </head>
 
+
 <div class="content-wrapper">
     <!-- Content -->
 
@@ -21,8 +22,8 @@
             <div class="table-responsive text-nowrap">
                 <div class="card-body d-flex justify-content-between align-items-center">
 
-                    <a type="button" href="@Url.Action("Create","UCs")" class="btn btn-outline-primary ml-auto">
-                        Add UC
+                    <a type="button" href="@Url.Action("Create","Directory")" class="btn btn-outline-primary ml-auto">
+                        Add Directory
                     </a>
 
                 </div>
@@ -31,22 +32,28 @@
                     <thead>
                         <tr>
                             <!--<th>Project</th>-->
-                            <th>UC Id</th>
-                            <th>UC Name.</th>
+                            <th>Type</th>
+                            <th>Department Name.</th>
+                            <th>Website</th>
+                            <th>Phone</th>
+                            <th>Email</th>
                             <th>Status</th>
 
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach (var item in Model)
-                        {
+                       @* @foreach (var item in Model)
+                        {*@
                             <tr>
-                                <td>@item.UCId</td>
-                                <td>@item.UCName</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
 
 
                                 <td>
-                                    <div class="dropdown">
+                                  @*  <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
@@ -54,12 +61,12 @@
                                             <a class="dropdown-item" href="@Url.Action("Detail","UCs", new{id = @item.UCId })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                             <a class="dropdown-item" href="@Url.Action("Delete","UCs", new{id = @item.UCId })"><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </td>
 
                             </tr>
-                        }
-
+                      @*  }
+*@
 
                     </tbody>
                 </table>
