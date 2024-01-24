@@ -1,0 +1,35 @@
+﻿@model Tkf_Complaint_System.Models.UC
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Details</h1>
+
+<div>
+    <h4>UC</h4>
+    <hr />
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UCName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UCName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+    </dl>
+</div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.UCId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

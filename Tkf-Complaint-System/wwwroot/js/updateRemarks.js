@@ -39,10 +39,11 @@ $(document).ready(function () {
             formData.append("id", id);
             formData.append("Action", statusId);
             formData.append("Remarks", remarks);
+            debugger
 
             $.ajax({
                 url: "/ClientInformationView/UpdateFeedback",
-                type: "POST",
+                type: "PUT",
                 data: formData,
                 processData: false,
                 contentType: false,

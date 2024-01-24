@@ -1,0 +1,99 @@
+﻿@model List<Project>
+<!-- jQuery -->
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+
+     
+        <div class="card">
+            <h5 class="card-header">Project</h5>
+            <div class="table-responsive text-nowrap">
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <a type="button" href="@Url.Action("CreateProject","Project")" class="btn btn-outline-primary ml-auto">
+                        Add Project
+                    </a>
+                  
+                </div>
+                <table id="example2" class="table table-bordered table-hover">
+                   
+                    <thead>
+                        <tr>
+                            <!--<th>Project</th>-->
+                            <th>Project Id</th>
+                            <th>Project Name.</th>
+                            <th>Status</th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ProjectId</td>
+                                <td>@item.ProjectName</td>
+                               
+
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="@Url.Action("Detail","ClientInformationView", new{ClientInfoId = @item.ProjectId })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("Delete","Project", new{id = @item.ProjectId })"><i class="bx bx-trash me-1"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            
+                            </tr>
+                        }
+                      
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Hoverable Table rows  -->
+
+        <hr class="my-5" />
+
+        <!-- / Content -->
+   
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true, // Enable searching
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "buttons": true,
+            "columnDefs": [
+                { "type": "html", "targets": "_all" } // Set the data type to "html" for all columns
+            ]
+        });
+    });
+</script>
+

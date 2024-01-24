@@ -1,0 +1,83 @@
+﻿@model Tkf_Complaint_System.Models.District
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Your existing logo HTML -->
+    <div class="app-brand demo">
+        <a href="/" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <!-- Add an id to easily target the logo in JavaScript -->
+                @*                            <img id="appBrandLogo" src="/assets/img/avatars/1.png" alt="Brand Logo">
+                *@
+            </span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">TKF - Admin</span>
+        </a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+    </div>
+
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashboard -->
+        <li class="menu-item active">
+            <a href="/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+            </a>
+        </li>
+
+
+
+        <li class="menu-item">
+            <a href="@Url.Action("Index","ClientInformationView")" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Client Information</div>
+            </a>
+        </li>
+        @*     <li class="menu-item">
+        <a href="project-table.html" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-table"></i>
+        <div data-i18n="Tables">Projects</div>
+        </a>
+        </li>*@
+        <li class="menu-item">
+            <a href="@Url.Action("CreateDistrict","Province")" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">Districts </div>
+            </a>
+        </li>
+
+    </ul>
+</aside>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-7 mb-4 order-0">
+
+<h2>Create District</h2>
+
+<form asp-action="CreateDistrict">
+    <div class="form-group">
+        <label asp-for="DistrictName"></label>
+        <input asp-for="DistrictName" class="form-control" />
+        <span asp-validation-for="DistrictName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProvinceId"></label>
+        @Html.DropDownList("ProvinceId", ViewBag.ProvinceList as SelectList, "Select a Province", new { @class = "form-control" })
+                    <span asp-validation-for="ProvinceId" class="text-danger"></span>
+
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Create District</button>
+</form>
+</div>
+        <div class="col-lg-5 mb-4 order-0">
+        </div>
+</div>       
+</div>
