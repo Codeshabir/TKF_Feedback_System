@@ -4,6 +4,8 @@
 }
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-xr2/MARtS8DvRVw8VB91sQvSjn8neW4P4jjo0s8yFR1iYUD5VMO6DsrUti+6lG5cBe83WOzEsyHLWZ4JNEN5lAA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
@@ -37,25 +39,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="DepartmentId">Select Department</label>
-                    <select asp-for="DepartmentId" class="form-control">
+                    <label asp-for="Id">Select Department</label>
+                    <select asp-for="Id" class="form-control">
                         <option value=""> Select a Department</option>
                         @foreach (var item in ViewBag.Departments)
                         {
-                            <option value="@item.DepartmentId">@item.DepartmentName</option>    
+                            <option value="@item.Id">@item.DepartmentName</option>    
                         }
                     </select>
                     
                 </div>
 
-                <h3>Create Person</h3>
-                <button id="addPerson" type="button" class="btn btn-success">Add Person</button>
+                <h3 style="margin-top:10px;">Add Person</h3>
 
                 <div id="personsContainer">
                 </div>
-
+                <button id="addPerson" type="button" class="btn btn-success" style="margin-top:10px;"><i class="fas fa-plus"></i> Add Person + </button>
+                <button id="removePerson" type="button" class="btn btn-danger" style="display: none; margin-top:10px;"><i class="fas fa-minus"></i> Remove Person -</button>
                 <br />
-                <button type="submit" class="btn btn-primary">Create Directory</button>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Directory</button>
+                <br />
             </form>
         </div>
         <div class="col-lg-5 mb-4 order-0">
@@ -63,48 +66,58 @@
     </div>
 </div>
 
-<!-- Add this script at the end of your HTML document -->
 <script>
     $(document).ready(function () {
-        // Counter to keep track of added persons
         var personCount = 0;
-
-        // Function to add person input fields
         function addPerson() {
             var personHtml = `
-                        <div class="person-group">
-                            <h3>Person ${personCount + 1}</h3>
-                            <div class="form-group">
-                                <label asp-for="Persons[${personCount}].PersonName">Person Name</label>
-                                <input name="Persons[${personCount}].PersonName" class="form-control" />
-                                <span asp-validation-for="Persons[${personCount}].PersonName" class="text-danger"></span>
+                            <div class="person-group" id="person-${personCount}">
+                                <h3>Person ${personCount + 1}</h3>
+                                <div class="form-group">
+                                    <label asp-for="Persons[${personCount}].PersonName">Person Name</label>
+                                    <input name="Persons[${personCount}].PersonName" class="form-control" />
+                                    <span asp-validation-for="Persons[${personCount}].PersonName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Persons[${personCount}].Designation">Designation</label>
+                                    <input name="Persons[${personCount}].Designation" class="form-control" />
+                                    <span asp-validation-for="Persons[${personCount}].Designation" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Persons[${personCount}].Phone">Person's Phone</label>
+                                    <input name="Persons[${personCount}].Phone" class="form-control" />
+                                    <span asp-validation-for="Persons[${personCount}].Phone" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Persons[${personCount}].Address">Address</label>
+                                    <input name="Persons[${personCount}].Address" class="form-control" />
+                                    <span asp-validation-for="Persons[${personCount}].Address" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Persons[${personCount}].Designation">Designation</label>
-                                <input name="Persons[${personCount}].Designation" class="form-control" />
-                                <span asp-validation-for="Persons[${personCount}].Designation" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Persons[${personCount}].Phone">Person's Phone</label>
-                                <input name="Persons[${personCount}].Phone" class="form-control" />
-                                <span asp-validation-for="Persons[${personCount}].Phone" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Persons[${personCount}].Address">Address</label>
-                                <input name="Persons[${personCount}].Address" class="form-control" />
-                                <span asp-validation-for="Persons[${personCount}].Address" class="text-danger"></span>
-                            </div>
-                        </div>
-                    `;
+                        `;
 
-            // Append the person fields to the container
             $("#personsContainer").append(personHtml);
             personCount++;
+
+            $("#removePerson").show();
         }
 
-        // Add click event for the "Add Person" button
         $("#addPerson").click(function () {
             addPerson();
         });
+
+        function removeLastPerson() {
+            if (personCount > 0) {
+                personCount--;
+                $("#person-" + personCount).remove();
+
+                $("#removePerson").toggle(personCount > 0);
+            }
+        }
+
+        $("#removePerson").click(function () {
+            removeLastPerson();
+        });
+
     });
 </script>

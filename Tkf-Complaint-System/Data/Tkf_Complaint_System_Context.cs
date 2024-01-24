@@ -33,6 +33,10 @@ namespace Tkf_Complaint_System.Data
 
         // Directory
 
+
+
+        public DbSet<DepartmentType> DepartmentTypes { get; set; }
+        public DbSet<DeptSubType> deptSubTypes { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Person> Persons { get; set; }
 

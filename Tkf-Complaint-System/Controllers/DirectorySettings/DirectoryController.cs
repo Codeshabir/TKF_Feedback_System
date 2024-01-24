@@ -34,7 +34,7 @@ public class DirectoryController : Controller
 
         var department = await _context.Departments
             .Include(d => d.Persons)
-            .FirstOrDefaultAsync(m => m.DepartmentId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
 
         if (department == null)
         {
@@ -90,7 +90,7 @@ public class DirectoryController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("DepartmentId,UCName,OfficialEmail,OfficialWebsite,OfficialPhone")] Department department)
     {
-        if (id != department.DepartmentId)
+        if (id != department.Id)
         {
             return NotFound();
         }
@@ -104,7 +104,7 @@ public class DirectoryController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DepartmentExists(department.DepartmentId))
+                if (!DepartmentExists(department.Id))
                 {
                     return NotFound();
                 }
@@ -127,7 +127,7 @@ public class DirectoryController : Controller
         }
 
         var department = await _context.Departments
-            .FirstOrDefaultAsync(m => m.DepartmentId == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
 
         if (department == null)
         {
@@ -150,6 +150,6 @@ public class DirectoryController : Controller
 
     private bool DepartmentExists(int id)
     {
-        return _context.Departments.Any(e => e.DepartmentId == id);
+        return _context.Departments.Any(e => e.Id == id);
     }
 }
