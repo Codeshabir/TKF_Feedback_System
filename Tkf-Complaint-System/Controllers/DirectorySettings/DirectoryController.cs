@@ -1,4 +1,5 @@
 ﻿// DepartmentController.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 using Tkf_Complaint_System.Data;
 using Tkf_Complaint_System.Models; // Make sure to include the correct namespace for your models
 using Tkf_Complaint_System.Models.DirectoryViewModel;
+
+[Authorize]
 [Controller]
 [Route("directory")]
 public class DirectoryController : Controller
@@ -43,28 +46,77 @@ public class DirectoryController : Controller
 
         return View(department);
     }
+
+    [HttpGet("GetDeptSubTypes")]
+    public async Task<IActionResult> GetDeptSubTypes(int? departmentTypeId)
+    {
+        var deptsubtypes = await _context.DeptSubTypes
+            .Where(d => d.Id == departmentTypeId)
+            .ToListAsync();
+        var result = deptsubtypes.Select(subtype => new
+        {
+            Id = subtype.Id,
+            SubType_Name = subtype.SubType_Name
+        });
+        return Json(result);
+    }
+
+
+
     [HttpGet("create")]
     public async Task<IActionResult> Create()
     {
-        var departments = await _context.Departments.ToListAsync();
-        ViewBag.Departments = departments;
+        var departmenttypes = await _context.DepartmentTypes.ToListAsync();
+        ViewBag.DepartmentTypes = departmenttypes;
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([Bind("DepartmentName,OfficialEmail,OfficialWebsite,OfficialPhone,DepartmentTypeId,DeptSubTypeId")] Department department, List<Person> persons)
+    {
+        
+       // persons.DepartmentId = department.DepartmentTypeId;
+        department.DeptSubTypeId = 1;
+        department.Persons = persons;    
+        _context.Add(department);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        return View(department);
+    }
+
+
+
+    // TYPES OF DEPARTMENT LIKE NGO,GOV,PVT
+    [HttpGet]
+    public async Task<IActionResult> GetDptTypes()
+    {
+        var dpttype = await _context.DepartmentTypes.ToListAsync();
+        return View (dpttype);
+    }
+
+    [HttpGet("CreateDptType")]
+    public async Task<IActionResult> CreateDptType()
+    {
+        var departmentsTypes = await _context.DepartmentTypes.ToListAsync();
+        ViewBag.departmentsTypes = departmentsTypes;
         return View();
     }
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [HttpPost("create")]
-    public async Task<IActionResult> Create([Bind("DepartmentName,OfficialEmail,OfficialWebsite,OfficialPhone")] Department department, List<Person> persons)
+    [HttpPost("CreateDptType")]
+    public async Task<IActionResult> CreateDptType([Bind("Dpt_Type")] DepartmentType departmentType)
     {
-        
-            department.Persons = persons;
-
-            _context.Add(department);
+           
+            _context.Add(departmentType);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetDptTypes));
 
-        return View(department);
+        return View(departmentType);
     }
 
 

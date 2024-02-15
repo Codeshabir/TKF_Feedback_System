@@ -31,12 +31,9 @@ namespace Tkf_Complaint_System.Data
         public DbSet<FeedbackTypes> feedbackTypes { get; set; }
         public DbSet<FeedbackSubtypes> feedbackSubtypes { get; set; }
 
-        // Directory
-
-
-
+        
         public DbSet<DepartmentType> DepartmentTypes { get; set; }
-        public DbSet<DeptSubType> deptSubTypes { get; set; }
+        public DbSet<DeptSubType> DeptSubTypes { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Person> Persons { get; set; }
 
@@ -62,6 +59,7 @@ namespace Tkf_Complaint_System.Data
               .WithMany(d => d.Persons)
               .HasForeignKey(p => p.DepartmentId);
 
+            // directory
 
 
         }

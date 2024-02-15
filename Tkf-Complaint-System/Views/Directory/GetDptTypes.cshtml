@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tkf_Complaint_System.Models.DirectoryViewModel.Department>
+﻿@model IEnumerable<Tkf_Complaint_System.Models.DirectoryViewModel.DepartmentType>
 <!-- jQuery -->
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,20 +18,13 @@
 
 
         <div class="card">
-            <h5 class="card-header">Directory List</h5>
+            <h5 class="card-header">Type of Department(Gov,Pvt,Ngo)</h5>
             <div class="table-responsive text-nowrap">
                 <div class="card-body d-flex justify-content-between align-items-center">
 
-                    <a type="button" href="@Url.Action("Create","Directory")" class="btn btn-outline-primary ml-auto">
-                        Add Directory
+                    <a type="button" href="@Url.Action("CreateDptType","Directory")" class="btn btn-outline-primary ml-auto">
+                        Add Type
                     </a>
-                    <a type="button" href="@Url.Action("CreateDptType","Directory")" class="btn btn-outline-success ml-auto">
-                        Add Type of Department(Gov,Pvt,Ngo)
-                    </a>
-                    <a type="button" href="@Url.Action("CreateDept","Directory")" class="btn btn-outline-danger ml-auto">
-                        Add Department/Org
-                    </a>
-
 
                 </div>
                 <table id="example2" class="table table-bordered table-hover">
@@ -39,11 +32,9 @@
                     <thead>
                         <tr>
                             <!--<th>Project</th>-->
-                            <th>ID</th>
-                            <th>Department Name.</th>
-                            <th>Website</th>
-                            <th>Phone</th>
-                            <th>Email</th>
+                            <th>Id.</th>
+                            <th>Type of Department.</th>
+                            <th>Created At</th>
                             <th>Status</th>
 
                         </tr>
@@ -53,20 +44,16 @@
                         {
                             <tr>
                                 <td>@item.Id</td>
-                                <td>@item.DepartmentName</td>
-                                <td>@item.OfficialWebsite</td>
-                                <td>@item.OfficialPhone</td>
-                                <td>@item.OfficialEmail</td>
-
-
+                                <td>@item.Dpt_Type</td>
+                                <td>@item.CreatedAt</td>
                                 <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="@Url.Action("Detail","Department", new{id = @item.Id })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                            <a class="dropdown-item" href="@Url.Action("Delete","Department", new{id = @item.Id })"><i class="bx bx-trash me-1"></i> Delete</a>
+                                            <a class="dropdown-item" href="@Url.Action("DetailDptType","Department", new{id = @item.Id })"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("DeleteDptType","Department", new{id = @item.Id })"><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Tkf_Complaint_System.Models;
 using Tkf_Complaint_System.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 public class DistrictController : Controller
 {
     private readonly Tkf_Complaint_System_Context _context;

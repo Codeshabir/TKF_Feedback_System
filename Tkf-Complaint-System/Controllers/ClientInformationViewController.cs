@@ -9,7 +9,7 @@ using static Tkf_Complaint_System.Controllers.ClientInformationController;
 
 namespace Tkf_Complaint_System.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class ClientInformationViewController : Controller
     {
         private readonly Tkf_Complaint_System_Context _context;
@@ -194,5 +194,30 @@ namespace Tkf_Complaint_System.Controllers
 
             }
         }
+
+
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            try
+            {
+                var clientInfo = _context.clientInformation.Find(id);
+
+                if (clientInfo == null)
+                {
+                    return Json(new { success = false, message = "Record not found" });
+                }
+
+                _context.clientInformation.Remove(clientInfo);
+                _context.SaveChanges();
+
+                return Json(new { success = true, message = "Record deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error deleting record: " + ex.Message });
+            }
+        }
+
     }
 }

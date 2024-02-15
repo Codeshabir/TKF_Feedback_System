@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tkf_Complaint_System.Data;
 
@@ -11,9 +12,11 @@ using Tkf_Complaint_System.Data;
 namespace Tkf_Complaint_System.Migrations
 {
     [DbContext(typeof(Tkf_Complaint_System_Context))]
-    partial class Tkf_Complaint_System_ContextModelSnapshot : ModelSnapshot
+    [Migration("20240126113547_DepartmentInitial")]
+    partial class DepartmentInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,13 +348,7 @@ namespace Tkf_Complaint_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DepartmentTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DeptSubTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DirectoryCityId")
                         .HasColumnType("int");
 
                     b.Property<string>("OfficialEmail")

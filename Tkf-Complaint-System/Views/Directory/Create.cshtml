@@ -4,7 +4,7 @@
 }
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-xr2/MARtS8DvRVw8VB91sQvSjn8neW4P4jjo0s8yFR1iYUD5VMO6DsrUti+6lG5cBe83WOzEsyHLWZ4JNEN5lAA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -38,17 +38,25 @@
                     <span asp-validation-for="OfficialPhone" class="text-danger"></span>
                 </div>
 
+                <!-- First dropdown for DepartmentType -->
                 <div class="form-group">
-                    <label asp-for="Id">Select Department</label>
-                    <select asp-for="Id" class="form-control">
+                    <label asp-for="DepartmentTypeId">Select Department</label>
+                    <select id="departmentTypeDropdown" asp-for="DepartmentTypeId" class="form-control">
                         <option value=""> Select a Department</option>
-                        @foreach (var item in ViewBag.Departments)
+                        @foreach (var item in ViewBag.DepartmentTypes)
                         {
-                            <option value="@item.Id">@item.DepartmentName</option>    
+                            <option value="@item.Id">@item.Dpt_Type</option>
                         }
                     </select>
-                    
                 </div>
+                <div class="form-group" id="deptSubTypeDropdownContainer">
+                    <label asp-for="DeptSubTypeId">Department SubType</label>
+                    <select asp-for="DeptSubTypeId" name="DeptSubTypeId" class="form-control">
+                        <option value="">Select a Sub Type</option>
+                        <!-- Options will be dynamically added here -->
+                    </select>
+                </div>
+
 
                 <h3 style="margin-top:10px;">Add Person</h3>
 
@@ -93,6 +101,8 @@
                                     <input name="Persons[${personCount}].Address" class="form-control" />
                                     <span asp-validation-for="Persons[${personCount}].Address" class="text-danger"></span>
                                 </div>
+                            <input type="hidden" name="departmentTypeDropdown" class="form-control" />
+
                             </div>
                         `;
 
@@ -120,4 +130,46 @@
         });
 
     });
+
+    $("#departmentTypeDropdown").change(function () {
+        var selectedDepartmentTypeId = $(this).val();
+
+        if (!selectedDepartmentTypeId) {
+            $("#deptSubTypeDropdownContainer").hide();
+            return;
+        }
+
+        $.ajax({
+            url: '/directory/GetDeptSubTypes',
+            method: 'GET',
+            data: { departmentTypeId: selectedDepartmentTypeId },
+            success: function (data) {
+                console.log("Received data:", data);
+
+                var $deptSubTypeDropdown = $("#DeptSubTypeId");
+
+                // Clear existing options
+                $deptSubTypeDropdown.empty();
+
+                // Add default option
+                $deptSubTypeDropdown.append('<option value="">Select a Sub Type</option>');
+
+                // Add options dynamically
+                $.each(data, function (index, item) {
+                    debugger;
+                    console.log("Processing item:", item);
+                    $deptSubTypeDropdown.append(`<option value="${item.Id}">${item.subType_Name}</option>`);
+                });
+
+                // Show the container
+                $("#deptSubTypeDropdownContainer").show();
+            },
+            error: function () {
+                console.error("Failed to fetch DeptSubTypes.");
+            }
+        });
+    });
+
+
 </script>
+

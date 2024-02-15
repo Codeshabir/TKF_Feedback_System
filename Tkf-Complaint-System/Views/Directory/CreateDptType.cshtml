@@ -1,0 +1,30 @@
+﻿@model Tkf_Complaint_System.Models.DirectoryViewModel.DepartmentType
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-xr2/MARtS8DvRVw8VB91sQvSjn8neW4P4jjo0s8yFR1iYUD5VMO6DsrUti+6lG5cBe83WOzEsyHLWZ4JNEN5lAA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+        <div class="col-lg-7 mb-4 order-0">
+
+            <h2>Create Directory</h2>
+
+            <form asp-action="CreateDptType" asp-controller="Directory" method="post">
+                <div class="form-group">
+                    <label asp-for="Dpt_Type">Department Type</label>
+                    <input asp-for="Dpt_Type" placeholder="Enter Department Type (NGO,PVT or GOV)" class="form-control" />
+                    <span asp-validation-for="Dpt_Type" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Type</button>
+                <br />
+            </form>
+        </div>
+        <div class="col-lg-5 mb-4 order-0">
+        </div>
+    </div>
+</div>
