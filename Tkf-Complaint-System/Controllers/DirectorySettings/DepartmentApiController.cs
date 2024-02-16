@@ -14,7 +14,6 @@ namespace Tkf_Complaint_System.Controllers.DirectorySettings
         readonly Tkf_Complaint_System_Context _context;
         public DepartmentApiController(Tkf_Complaint_System_Context complaint_System) {
             _context = complaint_System;
-        
         }
         [HttpGet]
         public ActionResult Index()
@@ -24,7 +23,6 @@ namespace Tkf_Complaint_System.Controllers.DirectorySettings
         [HttpGet("getDepartments/{DepartmentTypeId}")]
         public async Task<IActionResult> GetDepartments(int DepartmentTypeId)
         {
-
             if (DepartmentTypeId == 1)
             {
                 var dpt_subtypes = await
@@ -57,12 +55,10 @@ namespace Tkf_Complaint_System.Controllers.DirectorySettings
             {
                 if (DeptType != null)
                 {
-
                     var departmentsWithPersons = await _context.Departments
                     .Where(x => x.DepartmentTypeId == DeptType && (cityId == null || x.DirectoryCityId == cityId))
                     .Include(p => p.Persons)
                     .ToListAsync();
-
 
                     var result = departmentsWithPersons.Select(department => new DepartmentApiResponse
                     {
