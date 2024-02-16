@@ -48,21 +48,21 @@ namespace Tkf_Complaint_System.Controllers.DirectorySettings
                 .ToListAsync();
                 return Ok(dpt_subtypes);
             }
-
-            
         }
 
-        [HttpGet("getDirectories/{subDeptType}")]
-        public async Task<IActionResult> GetDirectories(int subDeptType, int? cityId)
+        [HttpGet("getDirectories/{DeptType}")]
+        public async Task<IActionResult> GetDirectories(int DeptType, int? cityId)
         {
             try
             {
-                if (subDeptType != null)
+                if (DeptType != null)
                 {
+
                     var departmentsWithPersons = await _context.Departments
-                        .Where(x => x.DeptSubTypeId == subDeptType || x.DirectoryCityId == cityId)
-                        .Include(p => p.Persons)
-                        .ToListAsync();
+                    .Where(x => x.DepartmentTypeId == DeptType && (cityId == null || x.DirectoryCityId == cityId))
+                    .Include(p => p.Persons)
+                    .ToListAsync();
+
 
                     var result = departmentsWithPersons.Select(department => new DepartmentApiResponse
                     {
@@ -76,7 +76,6 @@ namespace Tkf_Complaint_System.Controllers.DirectorySettings
                             PersonName = person.PersonName,
                             Designation = person.Designation,
                             Phone = person.Phone,
-                            Address = person.Address
                         }).ToList()
                     });
 

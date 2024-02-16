@@ -37,8 +37,6 @@ namespace Tkf_Complaint_System.Models.DirectoryViewModel
         public DeptSubType DeptSubType { get; set; }    
         public ICollection<Person> Persons { get; set; }
         public int DirectoryCityId { get; set; }
-
-
     }
     public class DirectoryCity
     {
@@ -46,8 +44,6 @@ namespace Tkf_Complaint_System.Models.DirectoryViewModel
         public int Id { get; set; }
         public string CityName { get; set; }
         public DateTime CreatedDate { get; set; }
-
-
     }
 
 
@@ -57,7 +53,7 @@ namespace Tkf_Complaint_System.Models.DirectoryViewModel
         public int Id { get; set; }
         public string DepartmentName { get; set; }
         public int DeptSubTypeId { get; set; }
-        public string SubType_Name { get; set; } // Include SubType_Name directly in the response model
+        public string SubType_Name { get; set; } 
         public ICollection<PersonResponse> Persons { get; set; }
     }
 
